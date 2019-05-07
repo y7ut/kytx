@@ -1,0 +1,25 @@
+{
+    "name": "jiweiwang/kytx",
+    "description": "开元通信官网",
+    "type": "project",
+    "authors": [
+        {
+            "name": "谢宇轩",
+            "email": "xieyx@lunion.com.cn"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.12",
+        "illuminate/database": "^5.8",
+        "slim/twig-view": "^2.5",
+        "monolog/monolog": "^1.24"
+    },
+    "scripts": {
+        "fix": "php-cs-fixer fix --diff"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}

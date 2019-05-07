@@ -1,0 +1,132 @@
+{# admin.layout.base #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {# title #}
+    <title>{% block title %}{% endblock %}</title>
+
+    {# Icon 模块 #}
+    {% block icon %}
+        <!--Favicon -->
+        <link rel="icon" href="{{ base_url() }}/assets/img/favicon.ico" type="image/x-icon"/>
+    {% endblock %}
+
+    {# css 和 js 模块 #}
+    {% block stylesheet %}
+        <!--Bootstrap.min css-->
+        <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+
+        <!--Icons css-->
+        <link rel="stylesheet" href="assets/css/icons.css">
+
+        <!--Style css-->
+        <link rel="stylesheet" href="assets/css/style.css">
+
+        <!--mCustomScrollbar css-->
+        <link rel="stylesheet" href="assets/plugins/scroll-bar/jquery.mCustomScrollbar.css">
+
+        <!--Sidemenu css-->
+        <link rel="stylesheet" href="assets/plugins/toggle-menu/sidemenu.css">
+
+        <!--Chartist css-->
+        <link rel="stylesheet" href="assets/plugins/chartist/chartist.css">
+        <link rel="stylesheet" href="assets/plugins/chartist/chartist-plugin-tooltip.css">
+
+        <!--Full calendar css-->
+        <link rel="stylesheet" href="assets/plugins/fullcalendar/stylesheet1.css">
+
+        <!--morris css-->
+        <link rel="stylesheet" href="assets/plugins/morris/morris.css">
+    {% endblock %}
+
+
+</head>
+
+<body class="app ">
+
+<div id="spinner"></div>
+
+<div id="app">
+    <div class="main-wrapper" >
+        {# 上方导航模块 #}
+        {% block nav %}
+            {{ include('Admin/layout/nav.html') }}
+        {% endblock %}
+
+        {# 左侧导航模块 #}
+        {% block aside %}
+            {{ include('Admin/layout/aside.html') }}
+        {% endblock %}
+
+        <div class="app-content">
+            <section class="section">
+                {# 指南map模块 #}
+                {% block map %}
+                {% endblock %}
+
+                {# 内容模块 #}
+                {% block content %}
+                {% endblock %}
+
+            </section>
+        </div>
+
+        {# 底部footer模块 #}
+        {% block footer %}
+            {{ include('Admin/layout/footer.html') }}
+        {% endblock %}
+
+    </div>
+</div>
+
+{# script 模块 #}
+{% block script %}
+    <!--Jquery.min js-->
+    <script src="assets/js/jquery.min.js"></script>
+
+    <!--popper js-->
+    <script src="assets/js/popper.js"></script>
+
+    <!--Tooltip js-->
+    <script src="assets/js/tooltip.js"></script>
+
+    <!--Bootstrap.min js-->
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--Jquery.nicescroll.min js-->
+    <script src="assets/plugins/nicescroll/jquery.nicescroll.min.js"></script>
+
+    <!--Scroll-up-bar.min js-->
+    <script src="assets/plugins/scroll-up-bar/dist/scroll-up-bar.min.js"></script>
+
+    <!--Sidemenu js-->
+    <script src="assets/plugins/toggle-menu/sidemenu.js"></script>
+
+    <!--mCustomScrollbar js-->
+    <script src="assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <!-- ECharts -->
+    <script src="assets/plugins/echarts/dist/echarts.js"></script>
+
+    <!--Min Calendar -->
+    <script src="assets/plugins/fullcalendar/calendar.min.js"></script>
+    <script src="assets/plugins/fullcalendar/custom_calendar.js"></script>
+
+    <!--Morris js-->
+    <script src="assets/plugins/morris/morris.min.js"></script>
+    <script src="assets/plugins/morris/raphael.min.js"></script>
+
+    <!--Scripts js-->
+    <script src="assets/js/scripts.js"></script>
+
+    <!--Dashboard js-->
+    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/apexcharts.js"></script>
+{% endblock %}
+
+</body>
+</html>
