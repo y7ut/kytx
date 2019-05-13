@@ -13,15 +13,21 @@ class AdminUser extends Model
     protected $table = 'kytx.admin_user';
 
     /**
+     * 应该转换为日期格式的属性.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'last_login',
+    ];
+
+    /**
      * 设置用户的密码.
      *
-     * @param  string  $value
-     * @return void
+     * @param string $value
      */
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = md5($value);
     }
-
 }
-

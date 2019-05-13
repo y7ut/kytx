@@ -2,17 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: YiChu
- * Date: 2019/5/7
- * Time: 10:56
+ * Date: 2019/5/13
+ * Time: 18:31
  */
 
-namespace App\Controller\Admin;
+namespace App\Controller\admin;
 
 use App\Controller\ViewTrait;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-final class BoardController
+class BannerController
 {
     use ViewTrait;
 
@@ -28,17 +28,9 @@ final class BoardController
         $this->setContainer($container);
     }
 
-    /**
-     * @param Request $request
-     * @param $response $response
-     *
-     * @throws \Exception
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function home(Request $request, Response $response)
+    public function index(Request $request, Response $response)
     {
         //向模板返回内容
-        return $this->compact($request, $response, 'Admin/board.html');
+        return $this->compact($request, $response, 'Admin/banner/table.html');
     }
 }

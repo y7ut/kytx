@@ -13,6 +13,7 @@ $container['view'] = function ($container) {
     $router = $container->get('router');
     $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
     $view->addExtension(new \Slim\Views\TwigExtension($router, $uri));
+    $view->addExtension(new  App\Common\TwigExtension\AdminExtension($container['auth']));
     $view->addExtension(new Knlv\Slim\Views\TwigMessages(
         new Slim\Flash\Messages()
     ));
@@ -24,15 +25,17 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-// Register provider
+// 前段提示
 $container['flash'] = function () {
     return new \Slim\Flash\Messages();
 };
 
+//session控制
 $container['session'] = function () {
     return new \SlimSession\Helper;
 };
 
+//用户鉴权
 $container['auth'] = function ($container){
     return new \App\Common\Auth\AdminAuth($container['session']);
 };
@@ -49,6 +52,7 @@ $container['validator'] = function () use ($defaultMessages) {
 };
 
 
+use App\Common\TwigExtension\AdminExtension;
 use Illuminate\Events\Dispatcher;
 
 //数据库ORM注入
