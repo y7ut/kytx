@@ -31,18 +31,9 @@ final class BoardController{
     public function home(Request $request, Response $response){
         //向模板返回内容
         return $this->compact($request, $response, 'Admin/board.html', [
-            '11'
+            'user'=> $this->auth->user()->email,
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \Exception
-     */
-    public function login(Request $request, Response $response){
-        //向模板返回内容
-        return $this->compact($request, $response, 'Admin/login.html', []);
-    }
+
 }

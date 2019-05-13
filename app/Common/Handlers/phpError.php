@@ -51,7 +51,7 @@ final class phpError {
     }
     return $response
              ->withStatus(500)
-             ->withHeader('Content-type','text/html')
+             ->withHeader('Content-type','application/json')
              ->write($result);
   }
 
@@ -78,6 +78,7 @@ final class phpError {
         ];
     } while ($error = $error->getPrevious());
 
-    return json_encode($json);
+    return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
   }
 }

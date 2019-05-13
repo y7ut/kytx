@@ -35,9 +35,21 @@ trait containerTrait {
      */
     protected function fetch(string $key) {
         if (!$this->hasContainer()) {
-            throw new \Exception ('Function \'setContainer\' should be use before call function \'fetch\'');
+            throw new \RuntimeException('Function \'setContainer\' should be use before call function \'fetch\'');
         }
         return $this->container->get($key);
+    }
+
+    /**
+     * 重载属性直接调用容器中的对象
+     *
+     * @param $name
+     * @return mixed
+     * @throws \Exception
+     */
+    public function __get($name)
+    {
+        return $this->fetch($name);
     }
 
     /**
@@ -48,7 +60,7 @@ trait containerTrait {
      */
     protected function has(string $key) :bool{
         if (!$this->hasContainer()) {
-            throw new \Exception ('Function \'setContainer\' should be use before call function \'has\'');
+            throw new \RuntimeException ('Function \'setContainer\' should be use before call function \'has\'');
         }
         return $this->container->has($key);
     }

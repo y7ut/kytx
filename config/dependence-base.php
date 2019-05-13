@@ -13,12 +13,85 @@ $container['view'] = function ($container) {
     $router = $container->get('router');
     $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
     $view->addExtension(new \Slim\Views\TwigExtension($router, $uri));
+    $view->addExtension(new Knlv\Slim\Views\TwigMessages(
+        new Slim\Flash\Messages()
+    ));
+    // Add the validator extension
+    $view->addExtension(
+        new Awurth\SlimValidation\ValidatorExtension($container['validator'])
+    );
 
     return $view;
 };
 
-//数据库ORM注入
+// Register provider
+$container['flash'] = function () {
+    return new \Slim\Flash\Messages();
+};
 
+$container['session'] = function () {
+    return new \SlimSession\Helper;
+};
+
+$container['auth'] = function ($container){
+    return new \App\Common\Auth\AdminAuth($container['session']);
+};
+
+$defaultMessages = [
+    'length' => '长度需要在{{minValue}}和{{maxValue}}之间',
+    'email' => '{{name}}不是一个合法的邮箱',
+    'notBlank' => '这是一个必填项'
+];
+
+// 表单验证
+$container['validator'] = function () use ($defaultMessages) {
+    return new Awurth\SlimValidation\Validator(true, $defaultMessages);
+};
+
+
+use Illuminate\Events\Dispatcher;
+
+//数据库ORM注入
+$container['db'] = function ($c) {
+    $connections = $c->get('settings')['mysql'];
+    // 初始化Eloquent ORM
+    $capsule = new \Illuminate\Database\Capsule\Manager();
+
+    $connectionList = [];
+
+    foreach ($connections as $name => $settings) {
+        $capsule->addConnection($settings, $name);
+        // 记录添加的连接名称
+        $connectionList[] = $name;
+    }
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+
+    $dispatcher = new Dispatcher();
+    // 我们需要将数据库的fetch 模式改为 FETCH_ASSOC
+    // 参考 https://github.com/laravel/framework/issues/17557
+    $dispatcher->listen(\Illuminate\Database\Events\StatementPrepared::class, function ($event) {
+        $event->statement->setFetchMode(\PDO::FETCH_ASSOC);
+    });
+
+    // 提取配置中的query-logger 对象
+    $query_log = $c->get('query-logger');
+    // 给每个connection 对象附加监听事件
+    foreach ($connectionList as $connectionName) {
+        // 需要设置dispatcher才可以实现日志的监听
+        $connectionObj = $capsule->connection($connectionName);
+        $connectionObj->setEventDispatcher($dispatcher);
+
+        // 根据设置处理SQL日志记录
+        if ($c->get('settings')['enableQueryLog'] ?? false) {
+            $connectionObj->listen(function ($queryExecuted) use ($query_log) {
+                $query_log->info($queryExecuted->sql, ['bindings' => $queryExecuted->bindings, 'time' => $queryExecuted->time]);
+            });
+        }
+    }
+
+    return $capsule;
+};
 
 
 

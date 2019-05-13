@@ -13,7 +13,22 @@ else {
   define ('CONF_DIR', '/production');
 }
 require __DIR__ . CONF_DIR . '/dependence.php';
+
+
+
 $app = new \Slim\App($container);
+
+// Start PHP session
+$app->add(new \Slim\Middleware\Session([
+    'name' => 'kytx_session',
+    'autorefresh' => true,
+]));
+
+$app->getContainer()['db'];
+
+
+
+
 
 require __DIR__ . '/../router/home.php';
 require __DIR__ . '/../router/admin.php';
