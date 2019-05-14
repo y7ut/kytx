@@ -43,7 +43,8 @@ $container['auth'] = function ($container){
 $defaultMessages = [
     'length' => '长度需要在{{minValue}}和{{maxValue}}之间',
     'email' => '{{name}}不是一个合法的邮箱',
-    'notBlank' => '这是一个必填项'
+    'notBlank' => '这是一个必填项',
+    'equals' => '两次输入的密码不一致，请重试'
 ];
 
 // 表单验证

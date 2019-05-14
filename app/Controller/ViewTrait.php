@@ -31,4 +31,12 @@ trait ViewTrait
         /* @var Response $view */
         return $this->fetch('view')->render($response, $viewPath, $viewData);
     }
+
+    /**
+     * @param string $message
+     */
+    protected function success(string $message)
+    {
+        $this->flash->addMessage('success', $message);
+    }
 }

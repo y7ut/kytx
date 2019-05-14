@@ -2,12 +2,13 @@
 
 namespace App\Model;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class AdminUser extends Model
 {
     /** @var array 数组中的属性会被展示 */
-    protected $visible = ['account', 'password', 'status', 'last_login'];
+    protected $visible = ['name', 'email', 'password', 'status', 'last_login'];
 
     /** @var string 表名 */
     protected $table = 'kytx.admin_user';
@@ -20,6 +21,18 @@ class AdminUser extends Model
     protected $dates = [
         'last_login',
     ];
+
+
+    /**
+     * 获取上次登录的日期.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getLastLoginAttribute($value)
+    {
+        return Carbon::create($value)->toDateString();
+    }
 
     /**
      * 设置用户的密码.

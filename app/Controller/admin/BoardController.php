@@ -38,6 +38,7 @@ final class BoardController
      */
     public function home(Request $request, Response $response)
     {
+
         //向模板返回内容
         return $this->compact($request, $response, 'Admin/board.html');
     }

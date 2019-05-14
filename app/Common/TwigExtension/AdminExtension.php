@@ -9,6 +9,7 @@
 namespace App\Common\TwigExtension;
 
 use App\Common\Auth\AdminAuth;
+use Carbon\Carbon;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -49,7 +50,7 @@ class AdminExtension extends AbstractExtension
     }
 
     /**
-     * 获取用户的用户名（email）
+     * 获取用户的用户名（name）
      *
      * @param string $key
      *
@@ -61,6 +62,7 @@ class AdminExtension extends AbstractExtension
             return  $this->adminAuth->user()->$key;
         }
 
-        return $this->adminAuth->user()->email;
+        return $this->adminAuth->user()->name;
     }
+
 }

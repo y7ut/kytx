@@ -62,9 +62,15 @@
             {{ include('Admin/layout/aside.html') }}
         {% endblock %}
 
+
+
         <div class="app-content">
             <section class="section">
                 {# 指南map模块 #}
+                {# 上方提示模块 #}
+                {% block flash %}
+                    {{ include('Admin/layout/flash.html') }}
+                {% endblock %}
 
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><i class="side-menu__icon fa fa-tachometer"></i><a href="{{ path_for('admin.board') }}">控制面板</a></li>

@@ -2,15 +2,11 @@
 
 {% block title %}开元通信{% endblock %}
 
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page">主页</li>
+{% endblock %}
+
 {% block content %}
-        {% for msg in flash('success') %}
-        <div class="alert alert-primary" role="alert">
-            <a href="#" class="close" data-dismiss="alert" aria-hidden="true">
-                &times;
-            </a>
-            {{ msg }}
-        </div>
-        {% endfor %}
     <h1>Index {{ user }}</h1>
     <p class="important">
         Welcome on my awesome homepage.

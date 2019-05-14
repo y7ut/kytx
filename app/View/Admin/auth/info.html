@@ -1,0 +1,88 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}录播图管理——开元通信后台{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page">用户设置</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 col-xl-4 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <div class="userprofile social">
+                        <div class="userpic"> <img src="{{ base_url() }}{{ get_user('avatar') }}" alt="" class="userpicimg"> </div>
+                        <h3 class="username">{{ get_user('name') }}</h3>
+                        <p>{{ get_user('last_login') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-xl-8 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>修改密码</h4>
+            </div>
+            <div class="card-body">
+                {% if has_errors() %}
+                    <div class="ui error message">
+                        {% for error in errors('auth') %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <form action="{{ path_for('admin.userEdit') }}" method="post">
+
+                    <input type="hidden" name="_METHOD" value="PUT"/>
+
+                    <div class="form-group">
+                        <label for="exampleInpuOldPassword">旧密码</label>
+                        <input type="password" class="form-control" id="exampleInpuOldPassword" name="oldPassword" placeholder="请输入旧的密码">
+
+                    </div>
+                    {% if has_error('oldPassword') %} <div class="alert alert-warning" role="alert">{{ error('oldPassword') }}</div>{% endif %}
+                    <div class="form-group">
+                        <label for="exampleInputPassword">新密码</label>
+                        <input type="password" class="form-control" id="exampleInputPassword" name='password' placeholder="请输入新的密码">
+
+                    </div>
+                    {% if has_error('password') %} <div class="alert alert-warning" role="alert">{{ error('password') }}</div>{% endif %}
+                    <div class="form-group">
+                        <label for="exampleInputNewPassword">确认密码</label>
+                        <input type="password" class="form-control" id="exampleInputNewPassword" name="newPassword" placeholder="请再次输入新的密码">
+
+                    </div>
+                    {% if has_error('newPassword') %} <div class="alert alert-warning" role="alert">{{ error('newPassword') }}</div>{% endif %}
+                    <div class="form-group">
+                        <span class="help-block">密码长度限制在5-12位，修改密码后，将退出登录</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-1 mb-0">立即修改</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h4>修改头像</h4>
+            </div>
+            <div class="card-body">
+                {% if has_error('avatar') %} <div class="alert alert-warning" role="alert">{{ error('avatar') }}</div>{% endif %}
+                    <form action="{{ path_for('admin.userAvatarEdit') }}" method="post" enctype="multipart/form-data">
+
+                        <input type="hidden" name="_METHOD" value="PUT"/>
+
+                        <div class="form-group files mb-lg-0">
+                            <input type="file" class="form-control1" name="avatar" multiple="">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-1 mb-0">立即修改</button>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
