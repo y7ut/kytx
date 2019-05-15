@@ -13,5 +13,5 @@ use Illuminate\Database\Eloquent\Model;
 class Banner extends Model
 {
     /** @var array 数组中的属性会被展示 */
-    protected $visible = ['title', 'src', 'url', 'id'];
+    protected $visible = ['title', 'src', 'url', 'id', 'status'];
 }

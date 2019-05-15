@@ -15,7 +15,7 @@
             </a>
         </li>
         <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
-                <img src="{{ base_url() }}{{ get_user('avatar') }}" alt="profile-user" class="rounded-circle w-32">
+                <img src="{{ base_url() }}/{{ get_user('avatar') }}" alt="profile-user" class="rounded-circle w-32">
                 <div class="d-sm-none d-lg-inline-block">{{ get_user() }}</div></a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="{{ path_for('admin.userEditPage') }}" class="dropdown-item has-icon">

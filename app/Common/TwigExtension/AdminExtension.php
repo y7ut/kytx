@@ -9,7 +9,6 @@
 namespace App\Common\TwigExtension;
 
 use App\Common\Auth\AdminAuth;
-use Carbon\Carbon;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -46,6 +45,9 @@ class AdminExtension extends AbstractExtension
     {
         return [
             new TwigFunction('get_user', [$this, 'getUser']),
+            new TwigFunction('get_page', [$this, 'getPage']),
+            new TwigFunction('last_page', [$this, 'lastPage']),
+            new TwigFunction('add_option', [$this, 'addOption']),
         ];
     }
 
@@ -65,4 +67,21 @@ class AdminExtension extends AbstractExtension
         return $this->adminAuth->user()->name;
     }
 
+    public function getPage($pageData)
+    {
+        return substr($pageData, 1);
+    }
+
+    public function lastPage(array $page)
+    {
+        return end($page);
+    }
+
+    public function addOption(array $pageItem)
+    {
+        array_unshift($pageItem, current($pageItem));
+        array_push($pageItem, end($pageItem));
+
+        return $pageItem;
+    }
 }

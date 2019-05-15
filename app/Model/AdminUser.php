@@ -22,11 +22,11 @@ class AdminUser extends Model
         'last_login',
     ];
 
-
     /**
      * 获取上次登录的日期.
      *
-     * @param  string  $value
+     * @param string $value
+     *
      * @return string
      */
     public function getLastLoginAttribute($value)

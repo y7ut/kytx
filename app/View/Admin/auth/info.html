@@ -1,6 +1,6 @@
 {% extends "Admin/layout/base.html" %}
 
-{% block title %}录播图管理——开元通信后台{% endblock %}
+{% block title %}轮播图管理——开元通信后台{% endblock %}
 
 {% block map %}
     <li class="breadcrumb-item active" aria-current="page">用户设置</li>
@@ -13,7 +13,7 @@
             <div class="card-body">
                 <div class="text-center">
                     <div class="userprofile social">
-                        <div class="userpic"> <img src="{{ base_url() }}{{ get_user('avatar') }}" alt="" class="userpicimg"> </div>
+                        <div class="userpic"> <img src="{{ base_url() }}/{{ get_user('avatar') }}" alt="" class="userpicimg"> </div>
                         <h3 class="username">{{ get_user('name') }}</h3>
                         <p>{{ get_user('last_login') }}</p>
                     </div>
@@ -40,7 +40,7 @@
 
                     <div class="form-group">
                         <label for="exampleInpuOldPassword">旧密码</label>
-                        <input type="password" class="form-control" id="exampleInpuOldPassword" name="oldPassword" placeholder="请输入旧的密码">
+                        <input type="password" class="form-control" id="exampleInputOldPassword" name="oldPassword" placeholder="请输入旧的密码">
 
                     </div>
                     {% if has_error('oldPassword') %} <div class="alert alert-warning" role="alert">{{ error('oldPassword') }}</div>{% endif %}

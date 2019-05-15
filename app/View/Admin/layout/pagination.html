@@ -1,0 +1,36 @@
+{% if paginator.hasPages() %}
+    <div class="d-flex justify-content-center">
+        <ul class="pagination mt-3 mb-0">
+            {% for key, element in elements %}
+                {% if element is string %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">{{ element }}</a>
+                    </li>
+                {% endif %}
+                {% if element is iterable %}
+                    {#首页#}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ current_path() }}"><<</a>
+                    </li>
+                    {% for page, url in element %}
+                            {% if page == paginator.currentPage() %}
+                                <li class="active page-item">
+                                    <a class="page-link" href="#">{{ page }}</a>
+                                </li>
+                            {% else %}
+                                <li><a href=""></a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ current_path() }}{{ get_page(url) }}">{{ page }}</a>
+                                </li>
+                            {% endif %}
+
+                    {% endfor %}
+                    {#末页#}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ current_path() }}{{ get_page(last_page(element)) }}">>></a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

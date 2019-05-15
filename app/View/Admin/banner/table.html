@@ -1,6 +1,6 @@
 {% extends "Admin/layout/base.html" %}
 
-{% block title %}录播图管理——开元通信后台{% endblock %}
+{% block title %}轮播图管理——开元通信后台{% endblock %}
 
 {% block map %}
     <li class="breadcrumb-item active" aria-current="page">轮播图管理</li>
@@ -16,76 +16,61 @@
                         <h4>轮播图管理</h4>
                     </div>
                     <div class="card-body">
+                        <div class="float-right">
+                            <a href="{{ path_for('admin.bannerCreate') }}" class="btn btn-app mt-2"><i class="fa fa-edit"></i>新增</a>
+                        </div>
                         <div class="e-table">
                             <div class="table-responsive table-lg">
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th  class="text-center">
-
-                                        </th>
-                                        <th class="text-center">Photo</th>
-                                        <th >Name</th>
-                                        <th>Date</th>
-                                        <th></th>
-                                        <th class="text-center">Actions</th>
+                                        <th class="text-center"></th>
+                                        <th class="text-center">缩略图</th>
+                                        <th>图片标题</th>
+                                        <th>图片跳转链接</th>
+                                        <th>是否显示</th>
+                                        <th class="text-center">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    {% for item in banner %}
                                     <tr>
+
                                         <td class="align-middle text-center">
-                                            1
+                                            {{ item.id }}
                                         </td>
-                                        <td class="align-middle text-center"><img alt="image" class="avatar avatar-md rounded-circle" src="assets/img/avatar/avatar-1.jpeg"></td>
-                                        <td class="text-nowrap align-middle">Adam Cotter</td>
-                                        <td class="text-nowrap align-middle"><span>09 Dec 2017</span></td>
+                                        <td width="20%" class="align-middle text-center"><img  alt="image" class="card-img-top" src="{{ base_url() }}/{{ item.src }}"></td>
+                                        <td class="text-nowrap align-middle">{{ item.title }}</td>
+                                        <td class="text-nowrap align-middle"><span>{{ item.url }}</span></td>
                                         <td class="text-center align-middle">
                                             <label class="custom-switch">
-                                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
-                                                <span class="custom-switch-indicator"></span>
+                                                <a href="{{ path_for('admin.bannerStatus',{ 'id':item.id}) }}"> <input type="checkbox" id="status-button" name="custom-switch-checkbox" {% if item.status > 0 %}checked="checked"{% endif %} class="custom-switch-input">
+                                                <span class="custom-switch-indicator"></span></a>
                                             </label>
                                         </td>
                                         <td class="text-center align-middle">
+                                            <form action="{{ path_for('admin.bannerDelete', {'id' : item.id}) }}" method="post">      <input type="hidden" name="_METHOD" value="DELETE"/>
                                             <div class="btn-group align-top">
-                                                <button class="btn btn-sm btn-primary badge" data-target="#user-form-modal" data-toggle="modal" type="button">Edit</button> <button class="btn btn-sm btn-primary badge" type="button"><i class="fa fa-trash"></i></button>
+                                                <button onclick="edit({{ item.id }})"  class="btn btn-sm btn-primary badge" data-target="#user-form-modal" data-toggle="modal" type="button">Edit</button> <button class="btn btn-sm btn-primary badge" type="submit"><i class="fa fa-trash"></i></button>
                                             </div>
+                                            </form>
                                         </td>
+
                                     </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="d-flex justify-content-center">
-                                <ul class="pagination mt-3 mb-0">
-                                    <li class="disabled page-item">
-                                        <a class="page-link" href="#">‹</a>
-                                    </li>
-                                    <li class="active page-item">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">4</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">5</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">›</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">»</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                            {{ banner.render('Admin/layout/pagination.html') | raw }}
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <script>
+        function edit(id) {
+            window.open("{{ base_url() }}/admin/banner/edit/"+id)
+        }
+    </script>
     </div>
 {% endblock %}

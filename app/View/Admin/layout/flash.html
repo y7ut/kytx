@@ -1,24 +1,33 @@
 {% for msg in flash('success') %}
-    <div class="alert alert-primary" role="alert">
-        <a href="#" class="close" data-dismiss="alert" aria-hidden="true">
-            <i class="alert-icon fa fa-times" data-toggle="tooltip" title="" data-original-title="关闭"></i>
-        </a>
-        {{ msg }}
+    <div class="alert alert-primary alert-has-icon alert-dismissible show fade mb-lg-0">
+        <div class="alert-icon"><i class="ion ion-ios-lightbulb-outline"></i></div>
+        <div class="alert-body">
+            <button class="close" data-dismiss="alert">
+                <span>×</span>
+            </button>
+            <div class="alert-title">{{ msg }}</div>
+        </div>
     </div>
 {% endfor %}
 {% for msg in flash('warning') %}
-    <div class="alert alert-warning" role="alert">
-        <a href="#" class="close" data-dismiss="alert" aria-hidden="true">
-            <i class="alert-icon fa fa-times" data-toggle="tooltip" title="" data-original-title="关闭"></i>
-        </a>
-        {{ msg }}
+    <div class="alert alert-warning alert-has-icon alert-dismissible show fade mb-lg-0">
+        <div class="alert-icon"><i class="ion ion-ios-lightbulb-outline"></i></div>
+        <div class="alert-body">
+            <button class="close" data-dismiss="alert">
+                <span>×</span>
+            </button>
+            <div class="alert-title">{{ msg }}</div>
+        </div>
     </div>
 {% endfor %}
 {% for msg in flash('error') %}
-    <div class="alert alert-danger" role="alert">
-        <a href="#" class="close" data-dismiss="alert" aria-hidden="true">
-            <i class="alert-icon fa fa-times" data-toggle="tooltip" title="" data-original-title="关闭"></i>
-        </a>
-        {{ msg }}
+    <div class="alert alert-danger alert-has-icon alert-dismissible show fade mb-lg-0">
+        <div class="alert-icon"><i class="ion ion-ios-lightbulb-outline"></i></div>
+        <div class="alert-body">
+            <button class="close" data-dismiss="alert">
+                <span>×</span>
+            </button>
+            <div class="alert-title">{{ msg }}</div>
+        </div>
     </div>
 {% endfor %}

@@ -52,6 +52,7 @@ class AdminAuth
         $user = AdminUser::where([
             'email' => $params['email'],
             'password' => md5($params['password']),
+            'status' => 1,
         ])->get()->first();
         if ($user) {
             $user->last_login = Carbon::now();

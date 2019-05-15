@@ -1,0 +1,69 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}轮播图管理{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path_for('admin.bannerTable') }}">轮播图管理</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ banner.title }} 修改</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12 col-xl-8 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>轮播图预览</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <div class="userprofile social">
+                            <div> <img src="{{ base_url() }}/{{ banner.src }}" alt="" class="userpicimg"> </div>
+                            <h3 class="username">{{ banner.title }}</h3>
+                            <p>{{ banner.url }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-xl-4 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>轮播图属性</h4>
+                </div>
+                <div class="card-body">
+
+                    <form action="{{ path_for('admin.bannerEdit') }}" method="post" enctype="multipart/form-data">
+
+                        <input type="hidden" name="_METHOD" value="PUT"/>
+                        <input type="hidden" name="id" value="{{ banner.id }}"/>
+
+                        <div class="form-group">
+                            <label for="exampleInpuOldPassword">轮播图标题</label>
+                            <input type="text" class="form-control" id="exampleInputTitle" name="title" placeholder="请输入新的标题" value="{{ banner.title }}">
+
+                        </div>
+                        {% if has_error('title') %} <div class="alert alert-warning" role="alert">{{ error('title') }}</div>{% endif %}
+                        <div class="form-group">
+                            <label for="exampleInputPassword">轮播图跳转链接</label>
+                            <input type="text" class="form-control" id="exampleInputUrl" name='url' placeholder="点击轮播图时会跳转到的链接" value="{{ banner.url }}">
+
+                        </div>
+                        {% if has_error('url') %} <div class="alert alert-warning" role="alert">{{ error('url') }}</div>{% endif %}
+                        <div class="form-group">
+
+                            <div class="form-group files mb-lg-0">
+                                <label for="exampleInputPassword">更换图片</label>
+                                <input type="file" class="form-control1" name="banner" multiple="">
+                            </div>
+                        </div>
+                        {% if has_error('banner') %} <div class="alert alert-warning" role="alert">{{ error('banner') }}</div>{% endif %}
+
+
+                        <button type="submit" class="btn btn-primary mt-1 mb-0">立即修改</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
