@@ -16,7 +16,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Respect\Validation\Validator as V;
 
-class BannerController
+final class BannerController
 {
     use ViewTrait;
     use ImageTrait;
@@ -118,6 +118,12 @@ class BannerController
         return $this->compact($request, $response, 'Admin/banner/new.html');
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface|Response
+     * @throws \Exception
+     */
     public function store(Request $request, Response $response)
     {
         $this->validator->validate($request, [
@@ -163,6 +169,12 @@ class BannerController
         return $response->withStatus(302)->withHeader('Location', $url);
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface|Response
+     * @throws \Exception
+     */
     public function edit(Request $request, Response $response)
     {
         $this->validator->validate($request, [
@@ -209,12 +221,20 @@ class BannerController
         return $response->withStatus(302)->withHeader('Location', $url);
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $arg
+     * @return Response
+     */
     public function delete(Request $request, Response $response, array $arg)
     {
         $banner = Banner::find($arg['id']);
-        $this->delImage($banner->src);
-        $url = $this->router->pathFor('admin.bannerTable');
+        $imageSrc = $banner->img;
+
+        $url = $this->router->pathFor('admin.newsTable');
         if ($banner->delete()) {
+            $this->delImage($imageSrc);
             $this->flash->addMessage('success', '操作成功');
         } else {
             $this->flash->addMessage('danger', '操作失败');

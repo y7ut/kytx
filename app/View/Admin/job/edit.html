@@ -1,0 +1,127 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}招聘信息——开元通信后台{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path_for('admin.jobTable') }}">招聘信息</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ job.title }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    </div>
+    <div class="col-lg-12 col-xl-8 offset-xl-2 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>{{ job.title }}</h4>
+            </div>
+            <div class="card-body">
+
+                <form action="{{ path_for('admin.jobEdit') }}" method="post">
+
+                    <input type="hidden" name="_METHOD" value="PUT"/>
+                    <input type="hidden" name="id" value="{{ job.id }}"/>
+
+                    <div class="form-group">
+                        <label for="exampleInputTitle">职位名称</label>
+                        <input type="text" class="form-control" id="exampleInputTitle" name="title"
+                               placeholder="请输入职位名称  例：软件工程师" value="{{ job.title }}">
+
+                    </div>
+                    {% if has_error('title') %}
+                        <div class="alert alert-warning" role="alert">{{ error('title') }}</div>{% endif %}
+
+                    <div class="form-group">
+                        <label for="exampleInputOldJob">工作地址</label>
+                        <input type="text" class="form-control" id="exampleInputOldJob" name="address"
+                               placeholder="请输入工作地址 例：北京市朝阳区北京大厦1206室" value="{{ job.address }}">
+
+                    </div>
+                    {% if has_error('address') %}
+                        <div class="alert alert-warning" role="alert">{{ error('address') }}</div>{% endif %}
+
+                    <div class="form-group">
+                        <label for="exampleInputEd">学历要求</label>
+                        <input type="text" class="form-control" id="exampleInputEd" name="education"
+                               placeholder="请输入学历要求" value="{{ job.education }}">
+
+                    </div>
+                    {% if has_error('education') %}
+                        <div class="alert alert-warning" role="alert">{{ error('education') }}</div>{% endif %}
+
+                    <div class="form-group">
+                        <label for="exampleInputTitleMinWage">薪资范围</label>
+                        <div class="row">
+                            <div class="col-md-6 m-t-6 m-b-6">
+                                <input type="text" class="form-control" id="exampleInputTitleMinWage" name="min_wage"
+                                       placeholder="请输入最小薪资 单位为K" value="{{ to_number(job.min_wage) }}">
+                            </div>
+                            <div class="col-md-6 m-t-6 m-b-6">
+                                <input type="text" class="form-control" id="exampleInputTitleMaxWage" name="max_wage"
+                                       placeholder="请输入最小薪资 单位为K" value="{{ to_number(job.max_wage) }}">
+                            </div>
+                        </div>
+
+                        {% if has_error('min_wage') %}
+                            <div class="alert alert-warning" role="alert">{{ error('min_wage') }}</div>{% endif %}
+                        {% if has_error('max_wage') %}
+                            <div class="alert alert-warning" role="alert">{{ error('max_wage') }}</div>{% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputTitleMinExperience">工作经验</label>
+                        <div class="row">
+                            <div class="col-md-6 m-t-6 m-b-6">
+                                <input type="text" class="form-control" id="exampleInputTitleMinExperience"
+                                       name="min_experience" placeholder="请输入最小工作年限 单位为年"
+                                       value="{{ to_number(job.min_experience) }}">
+                            </div>
+                            <div class="col-md-6 m-t-6 m-b-6">
+                                <input type="text" class="form-control" id="exampleInputTitleMaxExperience"
+                                       name="max_experience" placeholder="请输入最大工作年限 单位为年"
+                                       value="{{ to_number(job.max_experience) }}">
+                            </div>
+                        </div>
+
+                        {% if has_error('min_experience') %}
+                            <div class="alert alert-warning" role="alert">{{ error('min_experience') }}</div>{% endif %}
+                        {% if has_error('max_experience') %}
+                            <div class="alert alert-warning" role="alert">{{ error('max_experience') }}</div>{% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputC">职位性质</label>
+                        <select id="exampleInputC" class="form-control" name="work_category">
+                            {% if job.work_category == '全职' %}
+                                <option value="全职" selected="selected">全职</option>
+                                <option value="兼职">兼职</option>
+                            {% else %}
+                                <option value="全职" selected="selected">全职</option>
+                                <option value="兼职">兼职</option>
+                            {% endif %}
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="exampleInputWi">岗位简介</label>
+                        <textarea id="exampleInputWi" class="form-control" rows="6"
+                                  name="work_intro">{{ job.work_intro }}</textarea>
+                    </div>
+                    {% if has_error('work_intro') %}
+                        <div class="alert alert-warning" role="alert">{{ error('work_intro') }}</div>{% endif %}
+
+                    <div class="form-group">
+                        <label for="exampleInputJi">任职要求</label>
+                        <textarea id="exampleInputJi" class="form-control" rows="6"
+                                  name="job_intro">{{ job.job_intro }}</textarea>
+                    </div>
+                    {% if has_error('job_intro') %}
+                        <div class="alert alert-warning" role="alert">{{ error('job_intro') }}</div>{% endif %}
+
+                    <button type="submit" class="btn btn-primary mt-1 mb-0">发布</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -43,4 +43,11 @@ class AdminUser extends Model
     {
         $this->attributes['password'] = md5($value);
     }
+
+    /**
+     * 一对多关联文章资讯
+     */
+    public function news(){
+        $this->hasMany(News::class);
+    }
 }

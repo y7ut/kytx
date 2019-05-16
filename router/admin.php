@@ -4,6 +4,8 @@ use App\Common\Middleware\AuthMiddleware;
 use App\Controller\Admin\AuthController;
 use App\Controller\admin\BannerController;
 use App\Controller\Admin\BoardController;
+use App\Controller\admin\JobController;
+use App\Controller\admin\NewsController;
 use App\Controller\admin\UserController;
 
 $app->group('/admin', function() {
@@ -16,6 +18,29 @@ $app->group('/admin', function() {
         $this->put('', BannerController::class.':edit')->setName('admin.bannerEdit');//轮播图更新
         $this->delete('/{id}', BannerController::class.':delete')->setName('admin.bannerDelete');//轮播图删除
         $this->get('/status/{id}', BannerController::class.':status')->setName('admin.bannerStatus');//轮播图修改状态
+
+    });
+    $this->group('/news', function() {
+        $this->get('', NewsController::class.':index')->setName('admin.newsTable')->add(new \App\Common\Middleware\PaginationMiddleware($this->getContainer()));//轮播图列表页面
+        $this->get('/new', NewsController::class.':create')->setName('admin.newsCreate');//轮播图添加页面
+        $this->get('/edit/{id}', NewsController::class.':update')->setName('admin.newsUpdate');//轮播图更新页面
+        $this->post('', NewsController::class.':store')->setName('admin.newsStore');//轮播图新增
+        $this->put('', NewsController::class.':edit')->setName('admin.newsEdit');//轮播图更新
+        $this->delete('/{id}', NewsController::class.':delete')->setName('admin.newsDelete');//轮播图删除
+        $this->get('/status/{id}', NewsController::class.':status')->setName('admin.newsStatus');//轮播图修改状态
+
+    });
+    $this->group('/message', function() {
+        $this->get('', MessageController::class.':index')->setName('admin.MessageTable')->add(new \App\Common\Middleware\PaginationMiddleware($this->getContainer()));//轮播图列表页面
+    });
+    $this->group('/job', function() {
+        $this->get('', JobController::class.':index')->setName('admin.jobTable')->add(new \App\Common\Middleware\PaginationMiddleware($this->getContainer()));//招聘职位列表页面
+        $this->get('/new', JobController::class.':create')->setName('admin.jobCreate');//招聘职位添加页面
+        $this->get('/edit/{id}', JobController::class.':update')->setName('admin.jobUpdate');//招聘职位更新页面
+        $this->post('', JobController::class.':store')->setName('admin.jobStore');//招聘职位新增
+        $this->put('', JobController::class.':edit')->setName('admin.jobEdit');//招聘职位更新
+        $this->delete('/{id}', JobController::class.':delete')->setName('admin.jobDelete');//招聘职位删除
+        $this->get('/status/{id}', JobController::class.':status')->setName('admin.jobStatus');//招聘职位修改状态
 
     });
     $this->group('/users', function() {

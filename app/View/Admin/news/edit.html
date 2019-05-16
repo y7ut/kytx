@@ -1,0 +1,84 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}新闻资讯——开元通信后台{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path_for('admin.newsTable') }}">新闻资讯</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ news.title }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12 col-xl-4  col-md-12 col-sm-12" >
+            <div class="card">
+                <div class="card-header">
+                    <h4>缩略图预览</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <div class="userprofile social">
+                            <div> <img src="{{ base_url() }}/{{ news.img }}" alt="" class="card-img-top"> </div>
+                            <h3 class="username">{{ news.title }}</h3>
+                            <p>作者：{{ news.user.name }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-xl-8  col-md-12 col-sm-12" >
+            <div class="card">
+                <div class="card-header">
+                    <h4>{{ news.title }}</h4>
+                </div>
+                <div class="card-body">
+
+                    <form action="{{ path_for('admin.newsEdit') }}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="_METHOD" value="PUT"/>
+                        <input type="hidden" name="id" value="{{ news.id }}"/>
+                        <div class="form-group">
+                            <label for="exampleInpuOldPassword">资讯标题</label>
+                            <input type="text" class="form-control" id="exampleInputTitle" name="title" placeholder="请输入新的标题" value="{{ news.title }}">
+
+                        </div>
+                        {% if has_error('title') %} <div class="alert alert-warning" role="alert">{{ error('title') }}</div>{% endif %}
+
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword">新闻类型</label>
+                            <select class="form-control" name="type">
+                                {% if news.type == '新闻资讯' %}
+                                    <option value="新闻资讯" selected="selected">新闻资讯</option>
+                                    <option value="行业动态">行业动态</option>
+                                {% else %}
+                                    <option value="新闻资讯">新闻资讯</option>
+                                    <option value="行业动态" selected="selected">行业动态</option>
+                                {% endif %}
+
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword">资讯内容</label>
+                            <textarea id="elm1" name="content">{{ news.content |raw }}</textarea>
+
+                        </div>
+                        {% if has_error('content') %} <div class="alert alert-warning" role="alert">{{ error('content') }}</div>{% endif %}
+                        <div class="form-group">
+                            <div class="form-group files mb-lg-0">
+                                <label for="exampleInputPassword">缩略图片</label>
+                                <input type="file" class="form-control1" name="img" multiple="">
+                            </div>
+                        </div>
+                        {% if has_error('img') %} <div class="alert alert-warning" role="alert">{{ error('img') }}</div>{% endif %}
+
+                        <button type="submit" class="btn btn-primary mt-1 mb-0">立即修改</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

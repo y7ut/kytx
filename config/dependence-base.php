@@ -44,7 +44,9 @@ $defaultMessages = [
     'length' => '长度需要在{{minValue}}和{{maxValue}}之间',
     'email' => '{{name}}不是一个合法的邮箱',
     'notBlank' => '这是一个必填项',
-    'equals' => '两次输入的密码不一致，请重试'
+    'equals' => '两次输入的密码不一致，请重试',
+    'numeric' => '{{name}}应该是一个数字',
+    'notempty' => '内容不能为空'
 ];
 
 // 表单验证

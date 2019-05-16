@@ -1,0 +1,81 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}新闻资讯——开元通信后台{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page">新闻资讯</li>
+{% endblock %}
+
+{% block content %}
+<div class="section-body ">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="e-panel card">
+                <div class="card-header">
+                    <div class="float-right">
+                        <a href="{{ path_for('admin.newsCreate') }}" class="btn btn-lg btn-primary m-b-5 m-t-5"><i class="fa fa-edit"></i></a>
+                    </div>
+                    <h4>新闻资讯列表</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="e-table">
+                        <div class="table-responsive table-lg">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th class="text-center"></th>
+                                    <th class="text-center">缩略图</th>
+                                    <th>标题</th>
+                                    <th>类型</th>
+                                    <th>作者</th>
+                                    <th>上次编辑时间</th>
+                                    <th class="text-center">推荐</th>
+                                    <th class="text-center">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for key, item in news %}
+                                    <tr>
+
+                                        <td class="align-middle text-center">
+                                            {{ key+1 }}
+                                        </td>
+                                        <td  width="20%"  class="align-middle text-center"><img class="card-img-top" alt="image"  src="{{ base_url() }}/{{ item.img }}"></td>
+                                        <td class="text-nowrap align-middle">{{ item.title }}</td>
+                                        <td class="text-nowrap align-middle"><span>{{ item.type }}</span></td>
+                                        <td class="text-nowrap align-middle">{{ item.user.name }}</td>
+
+                                        <td class="text-nowrap align-middle">{{ item.updated_at }}</td>
+                                        <td class="text-center align-middle">
+                                            <label class="custom-switch">
+                                                <a href="{{ path_for('admin.newsStatus',{ 'id':item.id}) }}"> <input type="checkbox" id="status-button" name="custom-switch-checkbox" {% if item.hot > 0 %}checked="checked"{% endif %} class="custom-switch-input">
+                                                    <span class="custom-switch-indicator"></span></a>
+                                            </label>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <form action="{{ path_for('admin.newsDelete', {'id' : item.id}) }}" method="post">      <input type="hidden" name="_METHOD" value="DELETE"/>
+                                                <div class="btn-group align-top">
+                                                    <button onclick="edit({{ item.id }})"  class="btn btn-sm btn-primary badge" data-target="#user-form-modal" data-toggle="modal" type="button">Edit</button> <button class="btn btn-sm btn-primary badge" type="submit"><i class="fa fa-trash"></i></button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{ news.render('Admin/layout/pagination.html') | raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        function edit(id) {
+            window.open("{{ base_url() }}/admin/news/edit/"+id)
+        }
+    </script>
+{% endblock %}

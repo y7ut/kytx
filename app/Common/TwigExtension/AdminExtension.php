@@ -48,6 +48,7 @@ class AdminExtension extends AbstractExtension
             new TwigFunction('get_page', [$this, 'getPage']),
             new TwigFunction('last_page', [$this, 'lastPage']),
             new TwigFunction('add_option', [$this, 'addOption']),
+            new TwigFunction('to_number', [$this, 'toNumber']),
         ];
     }
 
@@ -77,6 +78,18 @@ class AdminExtension extends AbstractExtension
         return end($page);
     }
 
+    public function toNumber(string $string)
+    {
+
+        preg_match_all('/\d+/', $string, $numbers);
+        return $numbers[0][0];
+
+    }
+
+    /**
+     * @param array $pageItem
+     * @return array
+     */
     public function addOption(array $pageItem)
     {
         array_unshift($pageItem, current($pageItem));

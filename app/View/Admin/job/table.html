@@ -1,0 +1,85 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}招聘信息——开元通信后台{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page">招聘信息</li>
+{% endblock %}
+
+{% block content %}
+    <div class="section-body ">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="e-panel card">
+                    <div class="card-header">
+                        <div class="float-right">
+                            <a href="{{ path_for('admin.jobCreate') }}" class="btn btn-lg btn-primary m-b-5 m-t-5"><i class="fa fa-edit"></i></a>
+                        </div>
+                        <h4>招聘信息</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="e-table">
+                            <div class="table-responsive table-lg">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center"></th>
+                                        <th>职位</th>
+                                        <th>薪资</th>
+                                        <th>工作经验</th>
+                                        <th>教育经历</th>
+                                        <th>工作性质</th>
+                                        <th class="text-center">是否展示</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for key, item in jobs %}
+                                        <tr>
+
+                                            <td class="align-middle text-center">
+                                                {{ key+1 }}
+                                            </td>
+                                            <td class="text-nowrap align-middle">{{ item.title }}</td>
+                                            <td class="text-nowrap align-middle"><span>{{ item.min_wage }}-{{ item.max_wage }}</span></td>
+                                            <td class="text-nowrap align-middle"><span>{{ item.min_experience }}-{{ item.max_experience }}</span></td>
+                                            <td class="text-nowrap align-middle">{{ item.education }}</td>
+                                            <td class="text-nowrap align-middle">{{ item.work_category }}</td>
+                                            <td class="text-center align-middle">
+                                                <label class="custom-switch">
+                                                    <a href="{{ path_for('admin.jobStatus',{ 'id':item.id}) }}"> <input type="checkbox" id="status-button" name="custom-switch-checkbox" {% if item.status > 0 %}checked="checked"{% endif %} class="custom-switch-input">
+                                                        <span class="custom-switch-indicator"></span></a>
+                                                </label>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <form action="{{ path_for('admin.jobDelete', {'id' : item.id}) }}" method="post">      <input type="hidden" name="_METHOD" value="DELETE"/>
+                                                    <div class="btn-group align-top">
+                                                        <button onclick="edit({{ item.id }})"  class="btn btn-sm btn-primary badge" data-target="#user-form-modal" data-toggle="modal" type="button">Edit</button> <button class="btn btn-sm btn-primary badge" type="submit"><i class="fa fa-trash"></i></button>
+                                                    </div>
+                                                </form>
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {{ jobs.render('Admin/layout/pagination.html') | raw }}
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function edit(id) {
+                window.open("{{ base_url() }}/admin/job/edit/"+id)
+            }
+        </script>
+    </div>
+{% endblock %}

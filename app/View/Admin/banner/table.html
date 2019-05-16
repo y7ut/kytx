@@ -33,11 +33,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for item in banner %}
+                                    {% for key, item in banner %}
                                     <tr>
 
                                         <td class="align-middle text-center">
-                                            {{ item.id }}
+                                            {{ key+1 }}
                                         </td>
                                         <td width="20%" class="align-middle text-center"><img  alt="image" class="card-img-top" src="{{ base_url() }}/{{ item.src }}"></td>
                                         <td class="text-nowrap align-middle">{{ item.title }}</td>
@@ -69,7 +69,7 @@
     </div>
     <script>
         function edit(id) {
-            window.open("{{ base_url() }}/admin/banner/edit/"+id)
+            window.open("{{ base_url() }}/admin/banners/edit/"+id)
         }
     </script>
     </div>

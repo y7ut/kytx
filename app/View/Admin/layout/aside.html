@@ -28,15 +28,11 @@
         <li>
             <a class="side-menu__item" href="{{ path_for('admin.bannerTable') }}"><i class="side-menu__icon fa fa-file-image-o"></i><span class="side-menu__label">轮播图管理</span></a>
         </li>
-        <li class="slide">
-            <a class="side-menu__item"  data-toggle="slide" href="#"><i class="side-menu__icon fa fa-newspaper-o"></i><span class="side-menu__label">新闻资讯</span><i class="angle fa fa-angle-right"></i></a>
-            <ul class="slide-menu">
-                <li><a class="slide-item"  href="index.html"><span>公司新闻</span></a></li>
-                <li><a class="slide-item" href="index3.html"><span>行业动态</span></a></li>
-            </ul>
+        <li>
+            <a class="side-menu__item" href="{{ path_for('admin.newsTable') }}"><i class="side-menu__icon fa fa-newspaper-o"></i><span class="side-menu__label">新闻资讯</span></a>
         </li>
         <li>
-            <a class="side-menu__item" href="widgets.html"><i class="side-menu__icon fa fa-user-md"></i><span class="side-menu__label">招聘信息</span></a>
+            <a class="side-menu__item" href="{{ path_for('admin.jobTable') }}"><i class="side-menu__icon fa fa-user-md"></i><span class="side-menu__label">招聘信息</span></a>
         </li>
         <li>
             <a class="side-menu__item" href="widgets.html"><i class="side-menu__icon ion-person-stalker"></i><span class="side-menu__label">客户服务</span></a>
