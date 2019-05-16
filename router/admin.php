@@ -5,6 +5,7 @@ use App\Controller\Admin\AuthController;
 use App\Controller\admin\BannerController;
 use App\Controller\Admin\BoardController;
 use App\Controller\admin\JobController;
+use App\Controller\admin\MessageController;
 use App\Controller\admin\NewsController;
 use App\Controller\admin\UserController;
 
@@ -21,17 +22,18 @@ $app->group('/admin', function() {
 
     });
     $this->group('/news', function() {
-        $this->get('', NewsController::class.':index')->setName('admin.newsTable')->add(new \App\Common\Middleware\PaginationMiddleware($this->getContainer()));//轮播图列表页面
-        $this->get('/new', NewsController::class.':create')->setName('admin.newsCreate');//轮播图添加页面
-        $this->get('/edit/{id}', NewsController::class.':update')->setName('admin.newsUpdate');//轮播图更新页面
-        $this->post('', NewsController::class.':store')->setName('admin.newsStore');//轮播图新增
-        $this->put('', NewsController::class.':edit')->setName('admin.newsEdit');//轮播图更新
-        $this->delete('/{id}', NewsController::class.':delete')->setName('admin.newsDelete');//轮播图删除
-        $this->get('/status/{id}', NewsController::class.':status')->setName('admin.newsStatus');//轮播图修改状态
+        $this->get('', NewsController::class.':index')->setName('admin.newsTable')->add(new \App\Common\Middleware\PaginationMiddleware($this->getContainer()));//新闻资讯列表页面
+        $this->get('/new', NewsController::class.':create')->setName('admin.newsCreate');//新闻资讯添加页面
+        $this->get('/edit/{id}', NewsController::class.':update')->setName('admin.newsUpdate');//新闻资讯更新页面
+        $this->post('', NewsController::class.':store')->setName('admin.newsStore');//新闻资讯新增
+        $this->put('', NewsController::class.':edit')->setName('admin.newsEdit');//新闻资讯更新
+        $this->delete('/{id}', NewsController::class.':delete')->setName('admin.newsDelete');//新闻资讯删除
+        $this->get('/status/{id}', NewsController::class.':status')->setName('admin.newsStatus');//新闻资讯修改状态
 
     });
     $this->group('/message', function() {
-        $this->get('', MessageController::class.':index')->setName('admin.MessageTable')->add(new \App\Common\Middleware\PaginationMiddleware($this->getContainer()));//轮播图列表页面
+        $this->get('', MessageController::class.':index')->setName('admin.messageTable')->add(new \App\Common\Middleware\PaginationMiddleware($this->getContainer()));//客户消息列表页面
+        $this->get('/status/{id}', MessageController::class.':status')->setName('admin.messageStatus');//客户消息修改状态
     });
     $this->group('/job', function() {
         $this->get('', JobController::class.':index')->setName('admin.jobTable')->add(new \App\Common\Middleware\PaginationMiddleware($this->getContainer()));//招聘职位列表页面

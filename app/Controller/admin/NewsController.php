@@ -135,7 +135,7 @@ final class NewsController
         $news->title = $title;
         $news->content = $request->getParam('content');
         $news->type = $request->getParam('type');
-
+        $delName = $news->img;
         if (!empty($files['img']->file)) {
             if (!V::image()->validate($files['img']->file)) {
                 // 若不是图片返回错误提示
@@ -150,7 +150,7 @@ final class NewsController
         $url = $this->router->pathFor('admin.newsTable');
 
         if ($news->save()) {
-            $this->delImage($fileName);
+            $this->delImage($delName);
             $this->flash->addMessage('success', '修改成功');
         } else {
             $this->flash->addMessage('error', '修改失败');

@@ -71,17 +71,17 @@ final class BannerController
         } else {
             $banner->status = 0;
         }
-        $banner->save();
-        $url = $this->router->pathFor('admin.bannerTable');
-        try {
-            $banner->save();
-        } catch (QueryException $e) {
-            $this->flash->addMessage('error', '修改失败:'.$e->getMessage());
 
-            return $response->withStatus(302)->withHeader('Location', $url);
+        $url = $this->router->pathFor('admin.bannerTable');
+
+        if($banner->save()){
+            $this->flash->addMessage('success', '修改成功');
+
+        }else{
+            $this->flash->addMessage('error', '修改失败');
         }
 
-        $this->flash->addMessage('success', '修改成功');
+
 
         return $response->withStatus(302)->withHeader('Location', $url);
     }
@@ -195,7 +195,7 @@ final class BannerController
         $banner = Banner::find($bannerId);
         $banner->title = $title;
         $banner->url = $url;
-
+        $delFile = $banner->src;
         $files = $request->getUploadedFiles();
         if (!empty($files['banner']->file)) {
             if (!V::image()->validate($files['banner']->file)) {
@@ -212,7 +212,7 @@ final class BannerController
         $url = $this->router->pathFor('admin.bannerUpdate', ['id' => $bannerId]);
 
         if ($banner->save()) {
-            $this->delImage($fileName);
+            $this->delImage($delFile);
             $this->flash->addMessage('success', '修改成功');
         } else {
             $this->flash->addMessage('error', '修改失败');

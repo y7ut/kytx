@@ -100,7 +100,7 @@ final class UserController
                 return $this->addUser($request, $response);
             }
             $user = new AdminUser();
-            $user->password = md5('admin');
+            $user->password = 'admin';
             $user->name = $name;
             $user->email = $email;
             $user->avatar = '/assets/img/avatar/avatar-1.jpeg.jpg';

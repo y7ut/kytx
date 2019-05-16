@@ -162,11 +162,12 @@ final class AuthController
         //验证为图片
         if (V::image()->validate($files['avatar']->file)) {
             $fileName = $this->uploadImage($files['avatar'], 30, [300, 300]);
+            $delFile = $this->auth->user()->avatar;
             $this->auth->user()->avatar = $fileName;
             $user = AdminUser::find($this->auth->user()->id);
             $user->avatar = $fileName;
             if ($user->save()) {
-                $this->delImage($user->avatar);
+                $this->delImage($delFile);
                 $this->flash->addMessage('success', '修改成功');
             } else {
                 $this->flash->addMessage('danger', '修改失败');

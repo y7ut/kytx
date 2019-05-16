@@ -35,7 +35,7 @@ class AuthMiddleware
     {
         if (!$this->auth->user()) {
             $url = $this->router->pathFor('admin.loginPage');
-            $this->flash->addMessage('danger', '请重新登录');
+            $this->flash->addMessage('danger', '请先登录');
 
             return $response->withStatus(302)->withHeader('Location', $url);
         }
