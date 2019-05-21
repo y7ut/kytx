@@ -1,0 +1,57 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}产品类别{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path_for('admin.categoryTable') }}">产品类别</a></li>
+    <li class="breadcrumb-item active" aria-current="page">新增产品类别</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    </div>
+    <div class="col-lg-12 col-xl-8 offset-xl-2 col-md-12 col-sm-12" >
+        <div class="card">
+            <div class="card-header">
+                <h4>产品类别</h4>
+            </div>
+            <div class="card-body">
+
+                <form action="{{ path_for('admin.categoryCreate') }}" method="post" >
+
+                    <div class="form-group">
+                        <label for="exampleInputName">类别名称</label>
+                        <input type="text" class="form-control" id="exampleInputName" name="name" placeholder="请输入产品类别名称" >
+
+                    </div>
+
+                    {% if has_error('name') %} <div class="alert alert-warning" role="alert">{{ error('name') }}</div>{% endif %}
+                    <div class="form-group">
+                        <label for="exampleInputLabel">注释标签</label>
+                        <input type="text" class="form-control" id="exampleInputLabel" name="label" placeholder="请输入产品类别的注释标签" >
+
+                    </div>
+                    {% if has_error('label') %} <div class="alert alert-warning" role="alert">{{ error('label') }}</div>{% endif %}
+
+                    <div class="form-group">
+                        <label for="exampleInputLabelFather">父类别</label>
+
+                        <select id="exampleInputLabelFather" class="form-control" name="father">
+                            <option value="">无  : 顶级类别，没有父类别</option>
+                            {% for key, item in categories %}
+                            <option value="{{ item.id }}">{{ item.name }}  : {{ item.label }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <span class="help-block">类别名称和注释请限制在12字内，父分类会在产品列表左侧显示</span>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-1 mb-0">立即添加</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

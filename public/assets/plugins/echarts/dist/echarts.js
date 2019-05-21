@@ -4481,7 +4481,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        /**
-	         * 向量相�
+	         * 向量相�
 	         * @param {Vector2} out
 	         * @param {Vector2} v1
 	         * @param {Vector2} v2
@@ -4493,7 +4493,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        /**
-	         * 向量缩放后相�
+	         * 向量缩放后相�
 	         * @param {Vector2} out
 	         * @param {Vector2} v1
 	         * @param {Vector2} v2
@@ -8540,15 +8540,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * 动画主控制器
-	 * @config target 动画对象，可以是数组，如果是数组的话会批量分发onframe等事件
-	 * @config life(1000) 动画时长
-	 * @config delay(0) 动画延迟时间
-	 * @config loop(true)
-	 * @config gap(0) 循环的间隔时间
-	 * @config onframe
-	 * @config easing(optional)
-	 * @config ondestroy(optional)
-	 * @config onrestart(optional)
+	 * @category target 动画对象，可以是数组，如果是数组的话会批量分发onframe等事件
+	 * @category life(1000) 动画时长
+	 * @category delay(0) 动画延迟时间
+	 * @category loop(true)
+	 * @category gap(0) 循环的间隔时间
+	 * @category onframe
+	 * @category easing(optional)
+	 * @category ondestroy(optional)
+	 * @category onrestart(optional)
 	 *
 	 * TODO pause
 	 */
@@ -9530,7 +9530,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    /**
 	     * config默认配置项
-	     * @exports zrender/config
+	     * @exports zrender/category
 	     * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
 	     */
 	    var config = {
@@ -10887,8 +10887,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string} props.type Path type
 	     * @param {Function} props.init Initialize
 	     * @param {Function} props.buildPath Overwrite buildPath method
-	     * @param {Object} [props.style] Extended default style config
-	     * @param {Object} [props.shape] Extended default shape config
+	     * @param {Object} [props.style] Extended default style category
+	     * @param {Object} [props.shape] Extended default shape category
 	     */
 	    Path.extend = function (defaults) {
 	        var Sub = function (opts) {
@@ -15512,7 +15512,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        /**
-	         * 添加元�
+	         * 添加元�
 	         * @param  {string|module:zrender/Element} el
 	         */
 	        add: function (el) {
@@ -15521,7 +15521,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        /**
-	         * 删除元�
+	         * 删除元�
 	         * @param  {string|module:zrender/Element} el
 	         */
 	        remove: function (el) {
@@ -16216,7 +16216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * 事件分发代理
 	         *
 	         * @private
-	         * @param {Object} targetEl 目标图形元�
+	         * @param {Object} targetEl 目标图形元�
 	         * @param {string} eventName 事件名称
 	         * @param {Object} event 事件对象
 	         */
@@ -18466,8 +18466,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        defaultOption: {
-	            zlevel: 0,                  // 一级层�
-	            z: 2,                       // 二级层�
+	            zlevel: 0,                  // 一级层�
+	            z: 2,                       // 二级层�
 	            coordinateSystem: 'cartesian2d',
 	            legendHoverLink: true,
 
@@ -24216,8 +24216,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var defaultOption = {
 	        show: true,
-	        zlevel: 0,                  // 一级层�
-	        z: 0,                       // 二级层�
+	        zlevel: 0,                  // 一级层�
+	        z: 0,                       // 二级层�
 	        // 反向坐标轴
 	        inverse: false,
 	        // 坐标轴名字，默认为空
@@ -25209,8 +25209,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        defaultOption: {
-	            zlevel: 0,                  // 一级层�
-	            z: 2,                       // 二级层�
+	            zlevel: 0,                  // 一级层�
+	            z: 2,                       // 二级层�
 	            coordinateSystem: 'cartesian2d',
 	            legendHoverLink: true,
 	            // stack: null
@@ -28213,9 +28213,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        defaultOption: {
-	            // 一级层�
+	            // 一级层�
 	            zlevel: 0,
-	            // 二级层�
+	            // 二级层�
 	            z: 2,
 	            coordinateSystem: 'geo',
 	            // 各省的 map 暂时都用中文
@@ -37114,8 +37114,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        defaultOption: {
-	            zlevel: 0,                  // 一级层�
-	            z: 2,                       // 二级层�
+	            zlevel: 0,                  // 一级层�
+	            z: 2,                       // 二级层�
 	            legendHoverLink: true,
 	            left: 80,
 	            top: 60,
@@ -38042,8 +38042,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        parallelAxisIndex: null,
 
 	        defaultOption: {
-	            zlevel: 0,                  // 一级层�
-	            z: 0,                       // 二级层�
+	            zlevel: 0,                  // 一级层�
+	            z: 0,                       // 二级层�
 	            left: 80,
 	            top: 60,
 	            right: 80,
@@ -38922,8 +38922,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        defaultOption: {
-	            zlevel: 0,                  // 一级层�
-	            z: 2,                       // 二级层�
+	            zlevel: 0,                  // 一级层�
+	            z: 2,                       // 二级层�
 
 	            coordinateSystem: 'parallel',
 	            parallelIndex: 0,
@@ -40120,8 +40120,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @override
 	         */
 	        defaultOption: {
-	            zlevel: 0,                  // 一级层�
-	            z: 2,                       // 二级层�
+	            zlevel: 0,                  // 一级层�
+	            z: 2,                       // 二级层�
 	            coordinateSystem: 'cartesian2d',
 	            legendHoverLink: true,
 
@@ -40855,8 +40855,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @override
 	         */
 	        defaultOption: {
-	            zlevel: 0,                  // 一级层�
-	            z: 2,                       // 二级层�
+	            zlevel: 0,                  // 一级层�
+	            z: 2,                       // 二级层�
 	            coordinateSystem: 'cartesian2d',
 	            legendHoverLink: true,
 
@@ -41202,7 +41202,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // When to show the effect, option: 'render'|'emphasis'
 	            showEffectOn: 'render',
 
-	            // Ripple effect config
+	            // Ripple effect category
 	            rippleEffect: {
 	                period: 4,
 	                // Scale of ripple
@@ -42405,9 +42405,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        defaultOption: {
-	            // 一级层�
+	            // 一级层�
 	            zlevel: 0,
-	            // 二级层�
+	            // 二级层�
 	            z: 4,
 	            show: true,
 
@@ -45675,9 +45675,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        layoutMode: {type: 'box', ignoreSize: true},
 
 	        defaultOption: {
-	            // 一级层�
+	            // 一级层�
 	            zlevel: 0,
-	            // 二级层�
+	            // 二级层�
 	            z: 6,
 	            show: true,
 
@@ -52235,8 +52235,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	         */
 	        defaultOption: {
 
-	            zlevel: 0,                  // 一级层�
-	            z: 4,                       // 二级层�
+	            zlevel: 0,                  // 一级层�
+	            z: 4,                       // 二级层�
 	            show: true,
 
 	            axisType: 'time',  // 模式是时间类型，支持 value, category

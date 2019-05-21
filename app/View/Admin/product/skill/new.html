@@ -1,0 +1,57 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}产品技术类型{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path_for('admin.categoryTable') }}">产品技术类型</a></li>
+    <li class="breadcrumb-item active" aria-current="page">新增产品技术类型</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    </div>
+    <div class="col-lg-12 col-xl-8 offset-xl-2 col-md-12 col-sm-12" >
+        <div class="card">
+            <div class="card-header">
+                <h4>产品技术类型</h4>
+            </div>
+            <div class="card-body">
+
+                <form action="{{ path_for('admin.skillCreate') }}" method="post" >
+
+                    <div class="form-group">
+                        <label for="exampleInputName">技术类型</label>
+                        <input type="text" class="form-control" id="exampleInputName" name="name" placeholder="请输入产品技术类型" >
+
+                    </div>
+
+                    {% if has_error('name') %} <div class="alert alert-warning" role="alert">{{ error('name') }}</div>{% endif %}
+                    <div class="form-group">
+                        <label for="exampleInputLabel">注释标签</label>
+                        <input type="text" class="form-control" id="exampleInputLabel" name="label" placeholder="请输入产品技术类型的注释标签" >
+
+                    </div>
+                    {% if has_error('label') %} <div class="alert alert-warning" role="alert">{{ error('label') }}</div>{% endif %}
+                    <div class="form-group">
+                        <label for="exampleInputLabelCategory">所属产品种类</label>
+
+                        <select id="exampleInputLabelCategory" class="form-control" name="category_id">
+                            {% for key, item in categories %}
+                                <option value="{{ item.id }}" {% if val('category_id') == item.id  %} selected="selected" {% endif %}>{{ item.fatherCategory.name }}  ->  {{ item.name }}  : {{ item.label }} </option>
+                            {% endfor %}
+                        </select>
+                        {% if has_error('category_id') %} <div class="alert alert-warning" role="alert">{{ error('category_id') }}</div>{% endif %}
+
+                    </div>
+
+                    <div class="form-group">
+                        <span class="help-block">名称请限制在12字内,注释请限制在24字内</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-1 mb-0">立即添加</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

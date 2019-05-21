@@ -1,0 +1,28 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}客户服务——开元通信后台{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path_for('admin.jobTable') }}">客户服务</a></li>
+    <li class="breadcrumb-item active" aria-current="page">From :{{ message.name }} ( {{ message.email }} )</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    </div>
+    <div class="col-lg-12 col-xl-8 offset-xl-2 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>From :{{ message.name }} ( {{ message.email }} )</h4>
+            </div>
+            <div class="card-body">
+                <p>
+                    {{ message.content }}
+                </p>
+                <a  href="{{ path_for('admin.messageTable') }}" class="btn btn-primary mt-1 mb-0">返回</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

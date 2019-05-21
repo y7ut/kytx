@@ -1,0 +1,63 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}产品技术类型——开元通信后台{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page">产品技术类型</li>
+{% endblock %}
+
+{% block content %}
+    <div class="section-body ">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="e-panel card">
+                    <div class="card-header">
+                        <div class="float-right">
+                            <a href="{{ path_for('admin.skillCreatePage') }}" class="btn btn-lg btn-primary m-b-5 m-t-5"><i class="fa fa-edit"></i></a>
+                        </div>
+                        <h4>产品技术类型</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="e-table">
+                            <div class="table-responsive table-lg">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center"></th>
+                                        <th class=>技术类型</th>
+                                        <th class=>注释标签</th>
+                                        <th class=>技术所属产品类别</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in skills %}
+                                        <tr>
+
+                                            <td class="align-middle text-center">
+                                                {{ item.id }}
+                                            </td>
+                                            <td class="text-nowrap align-middle">{{ item.name }}</td>
+                                            <td class="text-nowrap align-middle">{{ item.label }}</td>
+                                            <td class="text-nowrap align-middle"><a href="{{ path_for('admin.categoryTable') }}?father={{ item.category.fatherCategory.id }}">{{ item.category.fatherCategory.name }}</a> -> {{ item.category.name }}</td>
+
+                                            <td class="text-center align-middle">
+                                                <form action="{{ path_for('admin.skillDelete', {'id' : item.id}) }}" method="post">      <input type="hidden" name="_METHOD" value="DELETE"/>
+                                                    <button type="submit" class="btn btn-danger btn-sm  mt-2 ">删除</button>
+                                                </form>
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

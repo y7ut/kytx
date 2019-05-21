@@ -755,8 +755,8 @@ var Graphics = function () {
       }
       this.ctx.fireEvent('dataPointSelection', [e, this.ctx, { selectedDataPoints: w.globals.selectedDataPoints, seriesIndex: i, dataPointIndex: j, config: w.config, globals: w.globals }]);
 
-      // if (this.w.config.chart.selection.selectedPoints !== undefined) {
-      //   this.w.config.chart.selection.selectedPoints(w.globals.selectedDataPoints)
+      // if (this.w.category.chart.selection.selectedPoints !== undefined) {
+      //   this.w.category.chart.selection.selectedPoints(w.globals.selectedDataPoints)
       // }
     }
   }, {
@@ -5403,7 +5403,7 @@ var XAxis = function () {
         elYaxis.add(elHorzLine);
 
         // let x = w.globals.yAxisWidths[0] / 2
-        // if (w.config.yaxis[0].opposite) {
+        // if (w.category.yaxis[0].opposite) {
         //   x = -w.globals.yAxisWidths[0] / 2
         // }
 
@@ -5980,7 +5980,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * ApexCharts Config Class for extending user options with pre-defined ApexCharts config.
+ * ApexCharts Config Class for extending user options with pre-defined ApexCharts category.
  *
  * @module Config
  **/
@@ -6072,13 +6072,13 @@ var Config = function () {
         newDefaults = _Utils2.default.extend(config, chartDefaults);
       }
 
-      // config should cascade in this fashion
-      // default-config < global-apex-variable-config < user-defined-config
+      // category should cascade in this fashion
+      // default-category < global-apex-variable-category < user-defined-category
 
-      // get GLOBALLY defined options and merge with the default config
+      // get GLOBALLY defined options and merge with the default category
       var mergedWithDefaultConfig = _Utils2.default.extend(newDefaults, window.Apex);
 
-      // get the merged config and extend with user defined config
+      // get the merged category and extend with user defined category
       config = _Utils2.default.extend(mergedWithDefaultConfig, opts);
 
       // some features are not supported. those mismatches should be handled
@@ -6094,13 +6094,13 @@ var Config = function () {
         opts.yaxis = {};
       }
 
-      // extend global yaxis config (only if object is provided / not an array)
+      // extend global yaxis category (only if object is provided / not an array)
       if (opts.yaxis.constructor !== Array && window.Apex.yaxis && window.Apex.yaxis.constructor !== Array) {
         opts.yaxis = _Utils2.default.extend(opts.yaxis, window.Apex.yaxis);
       }
 
       // as we can't extend nested object's array with extend, we need to do it first
-      // user can provide either an array or object in yaxis config
+      // user can provide either an array or object in yaxis category
       if (opts.yaxis.constructor !== Array) {
         // convert the yaxis to array if user supplied object
         opts.yaxis = [_Utils2.default.extend(options.yAxis, opts.yaxis)];
@@ -8758,7 +8758,7 @@ var CoreUtils = function () {
       });
     }
 
-    // Some config objects can be array - and we need to extend them correctly
+    // Some category objects can be array - and we need to extend them correctly
 
   }], [{
     key: "extendArrayProps",
@@ -10404,7 +10404,7 @@ var Position = function () {
 
       point.setAttribute('cx', cx);
       point.setAttribute('cy', cy);
-      // point.style.opacity = w.config.markers.hover.opacity
+      // point.style.opacity = w.category.markers.hover.opacity
 
       this.moveXCrosshairs(cx);
 
@@ -11046,7 +11046,7 @@ var ApexCharts = function () {
     this.opts = opts;
     this.ctx = this;
 
-    // Pass the user supplied options to the Base Class where these options will be extended with defaults. The returned object from Base Class will become the config object in the entire codebase.
+    // Pass the user supplied options to the Base Class where these options will be extended with defaults. The returned object from Base Class will become the category object in the entire codebase.
     this.w = new _Base2.default(opts).init();
 
     this.el = el;
@@ -11212,7 +11212,7 @@ var ApexCharts = function () {
       // legend is calculated here before coreCalculations because it affects the plottable area
       this.legend.init();
 
-      // coreCalculations will give the min/max range and yaxis/axis values. It should be called here to set series variable from config to globals
+      // coreCalculations will give the min/max range and yaxis/axis values. It should be called here to set series variable from category to globals
       if (gl.axisCharts) {
         this.core.coreCalculations();
         // as we have minX and maxX values, determine the default DateTimeFormat for time series
@@ -11361,7 +11361,7 @@ var ApexCharts = function () {
     /**
      * Allows users to update Options after the chart has rendered.
      *
-     * @param {object} options - A new config object can be passed which will be merged with the existing config object
+     * @param {object} options - A new category object can be passed which will be merged with the existing category object
      * @param {boolean} redraw - should redraw from beginning or should use existing paths and redraw from there
      * @param {boolean} animate - should animate or not on updating Options
      */
@@ -11388,10 +11388,10 @@ var ApexCharts = function () {
     /**
      * private method to update Options.
      *
-     * @param {object} options - A new config object can be passed which will be merged with the existing config object
+     * @param {object} options - A new category object can be passed which will be merged with the existing category object
      * @param {boolean} redraw - should redraw from beginning or should use existing paths and redraw from there
      * @param {boolean} animate - should animate or not on updating Options
-     * @param {boolean} overwriteInitialConfig - should update the initial config or not
+     * @param {boolean} overwriteInitialConfig - should update the initial category or not
      */
 
   }, {
@@ -11428,7 +11428,7 @@ var ApexCharts = function () {
             w.globals.lastXAxis = [];
             w.globals.lastYAxis = [];
 
-            // After forgetting lastAxes, we need to restore the new config in initialConfig/initialSeries
+            // After forgetting lastAxes, we need to restore the new category in initialConfig/initialSeries
             w.globals.initialConfig = _Utils2.default.extend({}, w.config);
             w.globals.initialSeries = JSON.parse(JSON.stringify(w.config.series));
           }
@@ -16251,7 +16251,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * ApexCharts Base Class for extending user options with pre-defined ApexCharts config.
+ * ApexCharts Base Class for extending user options with pre-defined ApexCharts category.
  *
  * @module Base
  **/
@@ -17032,7 +17032,7 @@ var Core = function () {
       var gl = w.globals;
       this.excludeCollapsedSeriesInYAxis();
 
-      // to determine whether data is in XY format or array format, we use original config
+      // to determine whether data is in XY format or array format, we use original category
       var configSeries = cnf.series.slice();
 
       this.fallbackToCategory = false;
@@ -17835,7 +17835,7 @@ var Legend = function () {
 
             w.globals.risingSeries.splice(removeIndexOfRising, 1);
 
-            // mutating the user's config object here
+            // mutating the user's category object here
             w.config.series[realIndex].data = [];
           } else {
             w.globals.collapsedSeries.push({
@@ -17938,7 +17938,7 @@ var Range = function () {
       }
 
       if (yMin > yMax) {
-        // if somehow due to some wrong config, user sent max less than min,
+        // if somehow due to some wrong category, user sent max less than min,
         // adjust the min/max again
         console.warn('yaxis.min cannot be greater than yaxis.max');
         yMax = yMin + 0.1;
@@ -18394,7 +18394,7 @@ var Responsive = function () {
       var w = this.w;
       var cnf = w.config;
 
-      // check if responsive config exists
+      // check if responsive category exists
       if (cnf.responsive === undefined) return;
 
       var newOptions = {};
@@ -20247,7 +20247,7 @@ var Globals = function () {
           colors: []
         },
         isDirty: false, // chart has been updated after the initial render. This is different than dataChanged property. isDirty means user manually called some method to update
-        initialConfig: null, // we will store the first config user has set to go back when user finishes interactions like zooming and come out of it
+        initialConfig: null, // we will store the first category user has set to go back when user finishes interactions like zooming and come out of it
         lastXAxis: [],
         lastYAxis: [],
         series: [], // the MAIN series array (y values)
@@ -20822,7 +20822,7 @@ var Intersect = function () {
           i = parseInt(bar.parentNode.getAttribute('data:realIndex'));
         }
 
-        // if (w.config.tooltip.shared) {
+        // if (w.category.tooltip.shared) {
         // this check not needed  at the moment
         //   const yDivisor = w.globals.gridHeight / (w.globals.series.length)
         //   const hoverY = ttCtx.clientY - ttCtx.seriesBound.top
@@ -21409,7 +21409,7 @@ var Marker = function () {
       }
 
       elPoint.setAttribute('r', newSize);
-      // elPoint.style.opacity = w.config.markers.hover.opacity
+      // elPoint.style.opacity = w.category.markers.hover.opacity
     }
   }, {
     key: 'oldPointSize',
@@ -21418,7 +21418,7 @@ var Marker = function () {
       var currSize = w.config.markers.size;
 
       point.setAttribute('r', currSize);
-      // point.style.opacity = w.config.markers.opacity
+      // point.style.opacity = w.category.markers.opacity
     }
   }, {
     key: 'resetPointsSize',
@@ -21430,7 +21430,7 @@ var Marker = function () {
       var points = w.globals.dom.baseEl.querySelectorAll('.apexcharts-marker');
       for (var p = 0; p < points.length; p++) {
         points[p].setAttribute('r', currSize);
-        // points[p].style.opacity = w.config.markers.opacity;
+        // points[p].style.opacity = w.category.markers.opacity;
       }
     }
   }]);

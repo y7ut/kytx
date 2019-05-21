@@ -33,13 +33,15 @@ final class NewsController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
+     *
      * @throws \Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function index(Request $request, Response $response){
-
+    public function index(Request $request, Response $response)
+    {
         $news = News::paginate(3);
         //向模板返回内容
         return $this->compact($request, $response, 'Admin/news/table.html', [
@@ -48,21 +50,26 @@ final class NewsController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
+     *
      * @throws \Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function create(Request $request, Response $response){
+    public function create(Request $request, Response $response)
+    {
         return $this->compact($request, $response, 'Admin/news/new.html');
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
+     *
      * @return \Psr\Http\Message\ResponseInterface|Response
      */
-    public function store(Request $request, Response $response){
+    public function store(Request $request, Response $response)
+    {
         $this->validator->validate($request, [
             'title' => V::notEmpty()->length(1, 24),
             'content' => V::notEmpty()->stringType(),
@@ -74,7 +81,7 @@ final class NewsController
         }
         $files = $request->getUploadedFiles();
 
-        $news = New News();
+        $news = new News();
         $news->title = $title;
         $news->content = $request->getParam('content');
         $news->type = $request->getParam('type');
@@ -83,6 +90,7 @@ final class NewsController
 
         if (empty($files['img']->file)) {
             $this->validator->addError('img', '请上传封面缩略图');
+
             return $this->create($request, $response);
         }
         if (!V::image()->validate($files['img']->file)) {
@@ -105,7 +113,9 @@ final class NewsController
 
         return $response->withStatus(302)->withHeader('Location', $url);
     }
-    public function update(Request $request, Response $response, array $arg){
+
+    public function update(Request $request, Response $response, array $arg)
+    {
         $id = $arg['id'];
         $news = News::find($id);
 
@@ -115,11 +125,13 @@ final class NewsController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
+     *
      * @return \Psr\Http\Message\ResponseInterface|Response
      */
-    public function edit(Request $request, Response $response){
+    public function edit(Request $request, Response $response)
+    {
         $this->validator->validate($request, [
             'title' => V::notEmpty()->length(1, 24),
             'content' => V::notEmpty()->stringType(),
@@ -128,6 +140,7 @@ final class NewsController
         $title = $request->getParam('title');
         if (!$this->validator->isValid()) {
             $arg['id'] = $id;
+
             return $this->update($request, $response, $arg);
         }
         $files = $request->getUploadedFiles();
@@ -141,6 +154,7 @@ final class NewsController
                 // 若不是图片返回错误提示
                 $this->validator->addError('img', '上传内容只能为图片');
                 $arg['id'] = $id;
+
                 return $this->update($request, $response, $arg);
             }
             $fileName = $this->uploadImage($files['img']);
@@ -160,12 +174,14 @@ final class NewsController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
      * @param $arg
+     *
      * @return Response
      */
-    public function delete(Request $request, Response $response, $arg){
+    public function delete(Request $request, Response $response, $arg)
+    {
         $banner = News::find($arg['id']);
         $imageSrc = $banner->img;
         $url = $this->router->pathFor('admin.bannerTable');
@@ -182,28 +198,30 @@ final class NewsController
     /**
      * 修改文章的热度状态
      *
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $arg
+     * @param array    $arg
+     *
      * @return Response
      */
-    public function status(Request $request, Response $response, array $arg){
+    public function status(Request $request, Response $response, array $arg)
+    {
         $id = $arg['id'];
         $url = $this->router->pathFor('admin.newsTable');
 
         $user = News::find($id);
 
         if (0 === $user->hot) {
-            $hotCount = News::where('hot',1)->count();
-            if(2==$hotCount){
+            $hotCount = News::where('hot', 1)->count();
+            if (2 == $hotCount) {
                 $this->flash->addMessage('error', '最多置顶4个新闻或资讯');
+
                 return $response->withStatus(302)->withHeader('Location', $url);
             }
             $user->hot = 1;
         } else {
             $user->hot = 0;
         }
-
 
         if ($user->save()) {
             $this->flash->addMessage('success', '操作成功');

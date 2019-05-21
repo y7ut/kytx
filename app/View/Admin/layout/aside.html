@@ -15,15 +15,34 @@
             <a class="side-menu__item" href="{{ path_for('admin.board') }}"><i class="side-menu__icon fa fa-tachometer"></i><span class="side-menu__label">控制面板</span></a>
         </li>
         <li class="slide">
-            <a class="side-menu__item"  data-toggle="slide" href="#"><i class="side-menu__icon fa fa-desktop"></i><span class="side-menu__label">产品管理</span><i class="angle fa fa-angle-right"></i></a>
+            <a class="side-menu__item"  data-toggle="slide" href="#"><i class="side-menu__icon ion-bag"></i><span class="side-menu__label">产品面板</span><i class="angle fa fa-angle-right"></i></a>
             <ul class="slide-menu">
-                <li><a class="slide-item"  href="index.html"><span>滤波器列表</span></a></li>
-                <li><a class="slide-item" href="index2.html"><span>硅麦克风列表</span></a></li>
-                <li><a class="slide-item" href="index3.html"><span>射频模组列表</span></a></li>
+                {{ product_aside() | raw}}
+            </ul>
+        </li>
+        <li class="slide">
+            <a class="side-menu__item" id="asd"  data-toggle="slide" href="#"><i class="side-menu__icon fa fa-desktop"></i><span class="side-menu__label">产品配置</span><i class="angle fa fa-angle-right"></i></a>
+            <ul id="asd"  class="slide-menu">
+                <li><a class="slide-item"  href="{{ path_for('admin.categoryTable') }}"><span>产品总类管理</span></a></li>
+                <li><a class="slide-item"  href="{{ path_for('admin.skillTable') }}"><span>技术类型管理</span></a></li>
+                <li><a class="slide-item"  href="{{ path_for('admin.typeTable') }}"><span>产品类型管理</span></a></li>
+                <li><a class="slide-item"  href="{{ path_for('admin.channelTable') }}"><span>技术频段管理</span></a></li>
+                <li><a class="slide-item"  href="{{ path_for('admin.sizeTable') }}"><span>技术尺寸管理</span></a></li>
+            </ul>
+        </li>
+        <li class="slide">
+            <a class="side-menu__item"  data-toggle="slide" href="#"><i class="side-menu__icon fa fa-tasks"></i><span class="side-menu__label">门户内容</span><i class="angle fa fa-angle-right"></i></a>
+            <ul class="slide-menu">
+                <li><a class="slide-item"  href="{{ path_for('admin.detailIntro') }}"><span>公司介绍内容设置</span></a></li>
+                <li><a class="slide-item" href="{{ path_for('admin.detailContact') }}"><span>联系我们内容设置</span></a></li>
+                <li><a class="slide-item" href="{{ path_for('admin.detailWish') }}"><span>企业愿景内容设置</span></a></li>
             </ul>
         </li>
         <li>
-            <a class="side-menu__item" href="widgets.html"><i class="side-menu__icon fa fa-thumbs-up"></i><span class="side-menu__label">推荐管理</span></a>
+            <a class="side-menu__item" href="{{ path_for('admin.detailTimeline') }}"><i class="side-menu__icon ion-ribbon-b"></i><span class="side-menu__label">发展历程</span></a>
+        </li>
+        <li>
+            <a class="side-menu__item" href="#"><i class="side-menu__icon fa fa-thumbs-up"></i><span class="side-menu__label">推荐设置</span></a>
         </li>
         <li>
             <a class="side-menu__item" href="{{ path_for('admin.bannerTable') }}"><i class="side-menu__icon fa fa-file-image-o"></i><span class="side-menu__label">轮播图管理</span></a>
@@ -36,16 +55,6 @@
         </li>
         <li>
             <a class="side-menu__item" href="{{ path_for('admin.messageTable') }}"><i class="side-menu__icon ion-person-stalker"></i><span class="side-menu__label">客户服务</span></a>
-        </li>
-        <li class="slide">
-            <a class="side-menu__item"  data-toggle="slide" href="#"><i class="side-menu__icon fa fa-tasks"></i><span class="side-menu__label">内容管理</span><i class="angle fa fa-angle-right"></i></a>
-            <ul class="slide-menu">
-                <li><a class="slide-item"  href="index.html"><span>公司介绍内容</span></a></li>
-                <li><a class="slide-item" href="index3.html"><span>联系我们内容</span></a></li>
-                <li><a class="slide-item" href="index3.html"><span>企业愿景内容</span></a></li>
-                <li><a class="slide-item" href="index3.html"><span>发展历程内容</span></a></li>
-                <li><a class="slide-item" href="index3.html"><span>公司地址设置</span></a></li>
-            </ul>
         </li>
         <li>
             <a class="side-menu__item" href="{{ path_for('admin.userList') }}"><i class="side-menu__icon fa fa fa-android"></i><span class="side-menu__label">管理员列表</span></a>

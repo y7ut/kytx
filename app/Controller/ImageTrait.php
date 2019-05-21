@@ -28,7 +28,7 @@ trait ImageTrait
         $img = Image::make($file->file);
         if (!empty($resize)) {
             list($heigth, $width) = $resize;
-            $img->resize($heigth, $width);
+            $img->crop($heigth, $width);
         }
         $type = substr($file->getClientMediaType(), strpos($file->getClientMediaType(), '/') + 1);
         $fileName = ''.'image'.'/'.time().rand(1000, 9999).'.'.$type;

@@ -2016,7 +2016,7 @@ module.exports = {
         };
     }
 
-    // internal storage for locale config files
+    // internal storage for locale category files
     var locales = {};
     var globalLocale;
 
@@ -2094,15 +2094,15 @@ module.exports = {
             config.abbr = name;
             if (locales[name] != null) {
                 deprecateSimple('defineLocaleOverride',
-                        'use moment.updateLocale(localeName, config) to change ' +
+                        'use moment.updateLocale(localeName, category) to change ' +
                         'an existing locale. moment.defineLocale(localeName, ' +
-                        'config) should only be used for creating a new locale');
+                        'category) should only be used for creating a new locale');
                 config = mergeConfigs(locales[name]._config, config);
             } else if (config.parentLocale != null) {
                 if (locales[config.parentLocale] != null) {
                     config = mergeConfigs(locales[config.parentLocale]._config, config);
                 } else {
-                    // treat as if there is no base config
+                    // treat as if there is no base category
                     deprecateSimple('parentLocaleUndefined',
                             'specified parentLocale is not defined yet');
                 }
@@ -2133,7 +2133,7 @@ module.exports = {
             // backwards compat for now: also set the locale
             locale_locales__getSetGlobalLocale(name);
         } else {
-            // pass null for config to unupdate, useful for tests
+            // pass null for category to unupdate, useful for tests
             if (locales[name] != null) {
                 if (locales[name].parentLocale != null) {
                     locales[name] = locales[name].parentLocale;
@@ -3084,7 +3084,7 @@ module.exports = {
 
             // TODO: We need to take the current isoWeekYear, but that depends on
             // how we interpret now (local, utc, fixed offset). So create
-            // a now version of current config (take local/utc/offset flags, and
+            // a now version of current category (take local/utc/offset flags, and
             // create now).
             weekYear = defaults(w.GG, config._a[YEAR], weekOfYear(local__createLocal(), 1, 4).year);
             week = defaults(w.W, 1);
@@ -3153,7 +3153,7 @@ module.exports = {
             token = tokens[i];
             parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
             // console.log('token', token, 'parsedInput', parsedInput,
-            //         'regex', getParseRegexForToken(token, config));
+            //         'regex', getParseRegexForToken(token, category));
             if (parsedInput) {
                 skipped = string.substr(0, string.indexOf(parsedInput));
                 if (skipped.length > 0) {
@@ -5855,7 +5855,7 @@ module.exports = function(Chart) {
 		}
 	};
 
-	// Register the default config for this type
+	// Register the default category for this type
 	Chart.defaults.scatter = defaultConfig;
 
 	// Scatter charts use line controllers
@@ -8624,7 +8624,7 @@ module.exports = function(Chart) {
 		helpers.each(Array.prototype.slice.call(arguments, 1), function(extension) {
 			helpers.each(extension, function(value, key) {
 				if (key === 'scales') {
-					// Scale config merging is complex. Add out own function here for that
+					// Scale category merging is complex. Add out own function here for that
 					base[key] = helpers.scaleMerge(base.hasOwnProperty(key) ? base[key] : {}, value);
 
 				} else if (key === 'scale') {
@@ -11139,7 +11139,7 @@ module.exports = function(Chart) {
 		// Use a registration function so that we can move to an ES6 map when we no longer need to support
 		// old browsers
 
-		// Scale config defaults
+		// Scale category defaults
 		defaults: {},
 		registerScaleType: function(type, scaleConstructor, defaults) {
 			this.constructors[type] = scaleConstructor;
@@ -12477,7 +12477,7 @@ module.exports = function(Chart) {
 module.exports = function(Chart) {
 
 	var helpers = Chart.helpers;
-	// Default config for a category scale
+	// Default category for a category scale
 	var defaultConfig = {
 		position: "bottom"
 	};

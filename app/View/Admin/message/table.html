@@ -25,9 +25,9 @@
                                     <th class="text-center"></th>
                                     <th class="text-center">联系人姓名</th>
                                     <th>邮箱</th>
-                                    <th>咨询内容</th>
                                     <th>咨询时间</th>
-                                    <th class="text-center">确认查看</th>
+                                    <th class="text-center">阅览状态</th>
+                                    <th class="text-center">资讯内容</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -39,7 +39,6 @@
                                         </td>
                                         <td class="text-nowrap align-middle">{{ item.name }}</td>
                                         <td class="text-nowrap align-middle"><span>{{ item.email }}</span></td>
-                                        <td class="text-nowrap align-middle">{{ item.content }}</td>
 
                                         <td class="text-nowrap align-middle">{{ item.created_at }}</td>
                                         <td class="text-center align-middle">
@@ -47,6 +46,12 @@
                                                 <a href="{{ path_for('admin.messageStatus',{ 'id':item.id}) }}"> <input type="checkbox" id="status-button" name="custom-switch-checkbox" {% if item.status > 0 %}checked="checked"{% endif %} class="custom-switch-input">
                                                     <span class="custom-switch-indicator"></span></a>
                                             </label>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                                <div class="btn-group align-top">
+                                                    <button onclick="show({{ item.id }})"  class="btn btn-sm btn-primary " data-target="#user-form-modal" data-toggle="modal" type="button">查看</button>
+                                                </div>
+
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -60,4 +65,9 @@
         </div>
     </div>
 </div>
+    <script>
+        function show(id) {
+            window.open("{{ base_url() }}/admin/message/"+id)
+        }
+    </script>
 {% endblock %}

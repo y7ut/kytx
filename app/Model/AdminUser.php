@@ -47,7 +47,8 @@ class AdminUser extends Model
     /**
      * 一对多关联文章资讯
      */
-    public function news(){
+    public function news()
+    {
         $this->hasMany(News::class);
     }
 }

@@ -8,14 +8,12 @@
 
 namespace App\Model;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
     /** @var array 数组中的属性会被展示 */
     protected $visible = ['title', 'img', 'type', 'content', 'hot'];
-
 
     /**
      * 被user关联
@@ -24,5 +22,4 @@ class News extends Model
     {
         return $this->belongsTo(AdminUser::class);
     }
-
 }

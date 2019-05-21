@@ -11,7 +11,6 @@ namespace App\Controller\admin;
 use App\Controller\ImageTrait;
 use App\Controller\ViewTrait;
 use App\Model\Banner;
-use Illuminate\Database\QueryException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Respect\Validation\Validator as V;
@@ -65,23 +64,24 @@ final class BannerController
     {
         $id = $arg['id'];
         $banner = Banner::find($id);
-
+        $url = $this->router->pathFor('admin.bannerTable');
         if (0 === $banner->status) {
+            $Count = Banner::where('status', 1)->count();
+            if (5 == $Count) {
+                $this->flash->addMessage('error', '最多显示5个轮播图');
+
+                return $response->withStatus(302)->withHeader('Location', $url);
+            }
             $banner->status = 1;
         } else {
             $banner->status = 0;
         }
 
-        $url = $this->router->pathFor('admin.bannerTable');
-
-        if($banner->save()){
+        if ($banner->save()) {
             $this->flash->addMessage('success', '修改成功');
-
-        }else{
+        } else {
             $this->flash->addMessage('error', '修改失败');
         }
-
-
 
         return $response->withStatus(302)->withHeader('Location', $url);
     }
@@ -119,10 +119,12 @@ final class BannerController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface|Response
+     *
      * @throws \Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface|Response
      */
     public function store(Request $request, Response $response)
     {
@@ -170,10 +172,12 @@ final class BannerController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface|Response
+     *
      * @throws \Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface|Response
      */
     public function edit(Request $request, Response $response)
     {
@@ -222,9 +226,10 @@ final class BannerController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $arg
+     * @param array    $arg
+     *
      * @return Response
      */
     public function delete(Request $request, Response $response, array $arg)

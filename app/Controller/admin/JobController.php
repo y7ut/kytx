@@ -10,11 +10,9 @@ namespace App\Controller\admin;
 
 use App\Controller\ViewTrait;
 use App\Model\Job;
-use App\Model\News;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Respect\Validation\Validator as V;
-
 
 final class JobController
 {
@@ -33,13 +31,15 @@ final class JobController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
+     *
      * @throws \Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function index(Request $request, Response $response){
-
+    public function index(Request $request, Response $response)
+    {
         $jobs = Job::paginate(6);
         //向模板返回内容
         return $this->compact($request, $response, 'Admin/job/table.html', [
@@ -48,22 +48,28 @@ final class JobController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
+     *
      * @throws \Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function create(Request $request, Response $response){
+    public function create(Request $request, Response $response)
+    {
         return $this->compact($request, $response, 'Admin/job/new.html');
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface|Response
+     *
      * @throws \Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface|Response
      */
-    public function store(Request $request, Response $response){
+    public function store(Request $request, Response $response)
+    {
         $this->validator->validate($request, [
             'title' => V::notBlank()->length(1, 24),
             'address' => V::notBlank()->length(1, 24),
@@ -104,7 +110,9 @@ final class JobController
 
         return $response->withStatus(302)->withHeader('Location', $url);
     }
-    public function update(Request $request, Response $response, array $arg){
+
+    public function update(Request $request, Response $response, array $arg)
+    {
         $id = $arg['id'];
         $job = Job::find($id);
 
@@ -114,11 +122,13 @@ final class JobController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
+     *
      * @return \Psr\Http\Message\ResponseInterface|Response
      */
-    public function edit(Request $request, Response $response){
+    public function edit(Request $request, Response $response)
+    {
         $this->validator->validate($request, [
             'title' => V::notBlank()->length(1, 24),
             'address' => V::notBlank()->length(1, 24),
@@ -130,9 +140,10 @@ final class JobController
             'min_experience' => V::notBlank()->numeric(),
             'education' => V::notBlank()->stringType(),
         ]);
-        $id =  $request->getParam('id');
+        $id = $request->getParam('id');
         if (!$this->validator->isValid()) {
             $arg['id'] = $id;
+
             return $this->update($request, $response, $arg);
         }
 
@@ -162,12 +173,14 @@ final class JobController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
      * @param $arg
+     *
      * @return Response
      */
-    public function delete(Request $request, Response $response, $arg){
+    public function delete(Request $request, Response $response, $arg)
+    {
         $banner = Job::find($arg['id']);
 
         $url = $this->router->pathFor('admin.jobTable');
@@ -184,28 +197,30 @@ final class JobController
     /**
      * 修改文章的热度状态
      *
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $arg
+     * @param array    $arg
+     *
      * @return Response
      */
-    public function status(Request $request, Response $response, array $arg){
+    public function status(Request $request, Response $response, array $arg)
+    {
         $id = $arg['id'];
         $url = $this->router->pathFor('admin.jobTable');
 
         $user = Job::find($id);
 
         if (0 === $user->status) {
-//            $Count = Job::where('hot',1)->count();
-//            if(2==$Count){
-//                $this->flash->addMessage('error', '最多置顶2个招聘');
-//                return $response->withStatus(302)->withHeader('Location', $url);
-//            }
+            $Count = Job::where('status', 1)->count();
+            if (2 == $Count) {
+                $this->flash->addMessage('error', '最多置顶2个招聘');
+
+                return $response->withStatus(302)->withHeader('Location', $url);
+            }
             $user->status = 1;
         } else {
             $user->status = 0;
         }
-
 
         if ($user->save()) {
             $this->flash->addMessage('success', '操作成功');

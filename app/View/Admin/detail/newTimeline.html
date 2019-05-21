@@ -1,0 +1,50 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}发展历程{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path_for('admin.detailTimeline') }}">发展历程</a></li>
+    <li class="breadcrumb-item active" aria-current="page">新增时间轴</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        </div>
+        <div class="col-lg-12 col-xl-8 offset-xl-2 col-md-12 col-sm-12" >
+            <div class="card">
+                <div class="card-header">
+                    <h4>新增时间轴</h4>
+                </div>
+                <div class="card-body">
+
+                    <form action="{{ path_for('admin.detailTimeline') }}" method="post" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label for="exampleInpuOldPassword">时间轴标题</label>
+                            <input type="text" class="form-control" id="exampleInputTitle" name="title" placeholder="请输入新的标题" >
+
+                        </div>
+                        {% if has_error('title') %} <div class="alert alert-warning" role="alert">{{ error('title') }}</div>{% endif %}
+                        <div class="form-group">
+                            <label for="exampleInputTIme">时间点</label>
+                            <input type="date" class="form-control" id="exampleInputTIme" name='time' placeholder="点击轮播图时会跳转到的链接">
+
+                        </div>
+                        {% if has_error('time') %} <div class="alert alert-warning" role="alert">{{ error('time') }}</div>{% endif %}
+                        <div class="form-group">
+                            <div class="form-group files mb-lg-0">
+                                <label for="exampleInputPassword">时间轴图片</label>
+                                <input type="file" class="form-control1" name="image" multiple="">
+                            </div>
+                        </div>
+                        {% if has_error('image') %} <div class="alert alert-warning" role="alert">{{ error('image') }}</div>{% endif %}
+
+
+                        <button type="submit" class="btn btn-primary mt-1 mb-0">发布</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

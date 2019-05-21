@@ -9,6 +9,8 @@
 namespace App\Common\TwigExtension;
 
 use App\Common\Auth\AdminAuth;
+use App\Model\Category;
+use App\Model\Scope\CategoryScope;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -49,6 +51,7 @@ class AdminExtension extends AbstractExtension
             new TwigFunction('last_page', [$this, 'lastPage']),
             new TwigFunction('add_option', [$this, 'addOption']),
             new TwigFunction('to_number', [$this, 'toNumber']),
+            new TwigFunction('product_aside', [$this, 'getProductAside']),
         ];
     }
 
@@ -80,14 +83,14 @@ class AdminExtension extends AbstractExtension
 
     public function toNumber(string $string)
     {
-
         preg_match_all('/\d+/', $string, $numbers);
-        return $numbers[0][0];
 
+        return $numbers[0][0];
     }
 
     /**
      * @param array $pageItem
+     *
      * @return array
      */
     public function addOption(array $pageItem)
@@ -96,5 +99,17 @@ class AdminExtension extends AbstractExtension
         array_push($pageItem, end($pageItem));
 
         return $pageItem;
+    }
+
+    public function getProductAside()
+    {
+        $category = Category::withoutGlobalScope(CategoryScope::class)->where('father_id', '!=', null)->get();
+        $html = '';
+        foreach ($category as $item) {
+            $href = '/admin/category/'.$item->id.'/product';
+            $html .= '<li><a class="slide-item"  href="'.$href.'"><span>'.$item->fatherCategory->name.':'.$item->name.'</span></a></li>'.PHP_EOL;
+        }
+
+        return $html;
     }
 }

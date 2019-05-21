@@ -41,8 +41,24 @@ class MessageController
     {
         $messages = Message::paginate(10);
         //向模板返回内容
-        return $this->compact($request, $response, 'Admin/message/table.html',[
-            'messages'=>$messages
+        return $this->compact($request, $response, 'Admin/message/table.html', [
+            'messages' => $messages,
+        ]);
+    }
+
+    public function show(Request $request, Response $response, array $arg)
+    {
+        $id = $arg['id'];
+        $message = Message::find($id);
+
+        if (0 === $message->status) {
+            $message->status = 1;
+        }
+
+        $message->save();
+
+        return $this->compact($request, $response, 'Admin/message/info.html', [
+            'message' => $message,
         ]);
     }
 
