@@ -77,8 +77,8 @@ final class TypesController
     public function store(Request $request, Response $response)
     {
         $this->validator->validate($request, [
-            'name' => V::length(1, 12),
-            'label' => V::length(1, 24),
+            'name' => V::length(1, 72),
+            'label' => V::length(1, 72),
             'category_id' => V::intVal(),
         ]);
 

@@ -1,0 +1,57 @@
+{% extends "Admin/layout/base.html" %}
+
+{% block title %}产品面板——开元通信后台{% endblock %}
+
+{% block map %}
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path_for('admin.newsTable') }}">产品面板-{{ category.name }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">新增产品</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    </div>
+    <div class="col-lg-12 col-xl-8 offset-xl-2 col-md-12 col-sm-12" >
+        <div class="card">
+            <div class="card-header">
+                <h4>新增{{ category.name }}产品</h4>
+            </div>
+            <div class="card-body">
+
+                <form action="{{ path_for('admin.productStore', {'id' : category.id}) }}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="exampleInputName">产品名称</label>
+                        <input type="text" class="form-control" id="exampleInputName" name="name" placeholder="请输入产品产品名称" value="{{ val('name') }} " >
+
+                    </div>
+
+                    {% if has_error('name') %} <div class="alert alert-warning" role="alert">{{ error('name') }}</div>{% endif %}
+                    {{ select_item(category) | raw }}
+                    <div class="form-group">
+                        <label for="exampleInputIntro">缩略简介</label>
+                        <textarea  class="form-control" rows="8" id = "exampleInputIntro" name="intro">{{ val('intro') |raw }}</textarea>
+
+                    </div>
+                    {% if has_error('intro') %} <div class="alert alert-warning" role="alert">{{ error('intro') }}</div>{% endif %}
+                    <div class="form-group">
+                        <label for="exampleInputPassword">详细内容</label>
+                        <textarea id="elm1" name="content">{{ val('content') |raw }}</textarea>
+
+                    </div>
+                    {% if has_error('content') %} <div class="alert alert-warning" role="alert">{{ error('content') }}</div>{% endif %}
+
+                    <div class="form-group">
+                        <div class="form-group files mb-lg-0">
+                            <label for="exampleInputPassword">封面图片</label>
+                            <input type="file" class="form-control1" name="image" multiple="">
+                        </div>
+                    </div>
+                    {% if has_error('image') %} <div class="alert alert-warning" role="alert">{{ error('image') }}</div>{% endif %}
+
+                    <button type="submit" class="btn btn-primary mt-1 mb-0">发布</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

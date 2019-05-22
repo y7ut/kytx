@@ -10,14 +10,14 @@ namespace App\Controller\admin;
 
 use App\Controller\ViewTrait;
 use App\Model\Category;
-use App\Model\Channel;
 use App\Model\Scope\CategoryScope;
-use App\Model\Scope\ChannelScope;
+use App\Model\Types;
+use App\Model\Voice;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Respect\Validation\Validator as V;
 
-final class ChannelController
+final class VoiceController
 {
     use ViewTrait;
 
@@ -43,23 +43,10 @@ final class ChannelController
      */
     public function index(Request $request, Response $response)
     {
-        $father = $request->getQueryParam('father') ?? false;
-        if ($father) {
-            $show = Channel::find($father);
+        $voice = Voice::all();
 
-            if(is_null($show)){
-                throw new \Slim\Exception\NotFoundException($request, $response);
-            }
-
-            $fatherChannels = $show->allChildrenChannels()->get();
-        } else {
-            $fatherChannels = Channel::all();
-            $show = false;
-        }
-
-        return $this->compact($request, $response, 'Admin/product/channel/table.html', [
-            'channels' => $fatherChannels,
-            'show' => $show,
+        return $this->compact($request, $response, 'Admin/product/voice/table.html', [
+            'voices' => $voice,
         ]);
     }
 
@@ -74,10 +61,8 @@ final class ChannelController
     public function create(Request $request, Response $response)
     {
         $categories = Category::withoutGlobalScope(CategoryScope::class)->where('father_id', '!=', null)->get();
-        $fatherChannels = Channel::all();
 
-        return $this->compact($request, $response, 'Admin/product/channel/new.html', [
-            'channels' => $fatherChannels,
+        return $this->compact($request, $response, 'Admin/product/voice/new.html', [
             'categories' => $categories,
         ]);
     }
@@ -86,6 +71,8 @@ final class ChannelController
      * @param Request  $request
      * @param Response $response
      *
+     * @throws \Exception
+     *
      * @return \Psr\Http\Message\ResponseInterface|Response
      */
     public function store(Request $request, Response $response)
@@ -93,42 +80,26 @@ final class ChannelController
         $this->validator->validate($request, [
             'name' => V::length(1, 72),
             'label' => V::length(1, 72),
-            'father' => V::intVal(),
             'category_id' => V::intVal(),
         ]);
 
         $label = $request->getParam('label');
         $name = $request->getParam('name');
-        $father = $request->getParam('father');
         $category_id = $request->getParam('category_id');
-
-        if ('0' === $father && '0' === $category_id) {
-            $this->validator->addError('category_id', '顶级的频段类型必须选择所属的产品类型');
-        }
 
         if (!$this->validator->isValid()) {
             return $this->create($request, $response);
         }
 
-        $channel = new Channel();
+        $voice = new Voice();
 
-        $channel->name = $name;
-        $channel->label = $label;
-        $channel->category_id = $category_id;
+        $voice->name = $name;
+        $voice->label = $label;
+        $voice->category_id = $category_id;
 
-        $url = $this->router->pathFor('admin.channelTable');
+        $url = $this->router->pathFor('admin.voiceTable');
 
-        if (!empty($father)) {
-            $channel->father_id = $father;
-            $channel->category_id = Channel::find($father)->category_id;
-            $url = $this->router->pathFor('admin.channelTable').'?father='.$father;
-
-        }
-
-
-
-
-        if ($channel->save()) {
+        if ($voice->save()) {
             $this->flash->addMessage('success', '添加成功');
         } else {
             $this->flash->addMessage('error', '修改失败');
@@ -146,10 +117,10 @@ final class ChannelController
      */
     public function delete(Request $request, Response $response, $arg)
     {
-        $category = Channel::withoutGlobalScope(ChannelScope::class)->find($arg['id']);
+        $voice = Voice::find($arg['id']);
 
-        $url = $this->router->pathFor('admin.channelTable');
-        if ($category->delete()) {
+        $url = $this->router->pathFor('admin.voiceTable');
+        if ($voice->delete()) {
             $this->flash->addMessage('success', '操作成功');
         } else {
             $this->flash->addMessage('danger', '操作失败');

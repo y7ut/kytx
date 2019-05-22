@@ -9,6 +9,8 @@
 namespace App\Model;
 
 use App\Model\Scope\CategoryScope;
+use App\Model\Scope\ChannelScope;
+use App\Model\Scope\ChannelSonScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -68,7 +70,7 @@ class Category extends Model
 
     public function channels()
     {
-        return $this->hasMany(Channel::class);
+        return $this->hasMany(Channel::class)->withoutGlobalScope(ChannelScope::class);
     }
 
     public function sizes()
@@ -76,8 +78,13 @@ class Category extends Model
         return $this->hasMany(Size::class);
     }
 
-    public function product()
+    public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function configs()
+    {
+        return $this->hasMany(Config::class);
     }
 }

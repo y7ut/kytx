@@ -33,11 +33,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for item in skills %}
+                                    {% for key, item in skills %}
                                         <tr>
 
                                             <td class="align-middle text-center">
-                                                {{ item.id }}
+                                                {{ key+1 }}
                                             </td>
                                             <td class="text-nowrap align-middle">{{ item.name }}</td>
                                             <td class="text-nowrap align-middle">{{ item.label }}</td>

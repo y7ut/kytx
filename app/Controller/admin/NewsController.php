@@ -114,10 +114,21 @@ final class NewsController
         return $response->withStatus(302)->withHeader('Location', $url);
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $arg
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Slim\Exception\NotFoundException
+     */
     public function update(Request $request, Response $response, array $arg)
     {
         $id = $arg['id'];
         $news = News::find($id);
+
+        if(is_null($news)){
+            throw new \Slim\Exception\NotFoundException($request, $response);
+        }
 
         return $this->compact($request, $response, 'Admin/news/edit.html', [
             'news' => $news,
@@ -198,11 +209,12 @@ final class NewsController
     /**
      * 修改文章的热度状态
      *
-     * @param Request  $request
+     * @param Request $request
      * @param Response $response
-     * @param array    $arg
+     * @param array $arg
      *
      * @return Response
+     * @throws \Slim\Exception\NotFoundException
      */
     public function status(Request $request, Response $response, array $arg)
     {
@@ -210,6 +222,11 @@ final class NewsController
         $url = $this->router->pathFor('admin.newsTable');
 
         $user = News::find($id);
+
+
+        if(is_null($user)){
+            throw new \Slim\Exception\NotFoundException($request, $response);
+        }
 
         if (0 === $user->hot) {
             $hotCount = News::where('hot', 1)->count();

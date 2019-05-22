@@ -43,8 +43,14 @@ final class CategoryController
     {
         $father = $request->getQueryParam('father') ?? false;
         if ($father) {
-            $fatherCategories = Category::find($father)->allChildrenCategories()->get();
             $father = Category::find($father);
+
+            if(is_null($father)){
+                throw new \Slim\Exception\NotFoundException($request, $response);
+            }
+
+            $fatherCategories = $father->allChildrenCategories()->get();
+
         } else {
             $fatherCategories = Category::all();
             $father = false;
@@ -84,8 +90,8 @@ final class CategoryController
     public function store(Request $request, Response $response)
     {
         $this->validator->validate($request, [
-            'name' => V::length(1, 12),
-            'label' => V::length(1, 24),
+            'name' => V::length(1, 72),
+            'label' => V::length(1, 72),
         ]);
 
         $label = $request->getParam('label');
@@ -117,15 +123,20 @@ final class CategoryController
     }
 
     /**
-     * @param Request  $request
+     * @param Request $request
      * @param Response $response
      * @param $arg
      *
      * @return Response
+     * @throws \Slim\Exception\NotFoundException
      */
     public function delete(Request $request, Response $response, $arg)
     {
         $category = Category::withoutGlobalScope(CategoryScope::class)->find($arg['id']);
+
+        if(is_null($category)){
+            throw new \Slim\Exception\NotFoundException($request, $response);
+        }
 
         $url = $this->router->pathFor('admin.categoryTable');
         if ($category->delete()) {

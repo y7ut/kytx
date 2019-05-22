@@ -54,6 +54,10 @@ final class UserController
 
         $user = AdminUser::find($id);
 
+        if(is_null($user)){
+            throw new \Slim\Exception\NotFoundException($request, $response);
+        }
+
         if (0 === $user->status) {
             $user->status = 1;
         } else {

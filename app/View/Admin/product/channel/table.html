@@ -16,7 +16,7 @@
                         <div class="float-right">
                             <a href="{{ path_for('admin.channelCreatePage') }}" class="btn btn-lg btn-primary m-b-5 m-t-5"><i class="fa fa-edit"></i></a>
                         </div>
-                        <h4>产品频段{% if show %} - {{ show.name }} 包含的子频段{% endif %}</h4>
+                        <h4>产品频段{% if show %} - {{ show.label }} 包含的子频段{% endif %}</h4>
 
                     </div>
                     <div class="card-body">
@@ -34,16 +34,17 @@
                                         <th class=>父频段</th>
                                         {% else %}
                                         <th class="text-center">子分类</th>
+                                        <th class="text-center">子分类数量</th>
                                         {% endif %}
                                         <th class="text-center">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for item in channels %}
+                                    {% for key, item in channels %}
                                         <tr>
 
                                             <td class="align-middle text-center">
-                                                {{ item.id }}
+                                                {{ key+1 }}
                                             </td>
                                             <td class="text-nowrap align-middle">{{ item.name }}</td>
                                             <td class="text-nowrap align-middle">{{ item.label }}</td>
@@ -54,6 +55,7 @@
                                                 <td class="text-nowrap align-middle">{{ item.fatherChannel.name }}</td>
                                             {% else %}
                                                 <td class="text-center align-middle">  <a href="?father={{ item.id }}" class="btn btn-primary btn-sm  mt-2 ">查看子频段</a></td>
+                                                <td class="text-center align-middle">{{ item.allChildrenChannels.count }}</td>
                                             {% endif %}
                                             <td class="text-center align-middle">
                                                 <form action="{{ path_for('admin.channelDelete', {'id' : item.id}) }}" method="post">      <input type="hidden" name="_METHOD" value="DELETE"/>

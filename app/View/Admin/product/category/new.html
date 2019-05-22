@@ -21,14 +21,14 @@
 
                     <div class="form-group">
                         <label for="exampleInputName">类别名称</label>
-                        <input type="text" class="form-control" id="exampleInputName" name="name" placeholder="请输入产品类别名称" >
+                        <input type="text" class="form-control" id="exampleInputName" name="name" placeholder="请输入产品类别名称" value="{{ val('name') }} " >
 
                     </div>
 
                     {% if has_error('name') %} <div class="alert alert-warning" role="alert">{{ error('name') }}</div>{% endif %}
                     <div class="form-group">
                         <label for="exampleInputLabel">注释标签</label>
-                        <input type="text" class="form-control" id="exampleInputLabel" name="label" placeholder="请输入产品类别的注释标签" >
+                        <input type="text" class="form-control" id="exampleInputLabel" name="label" placeholder="请输入产品类别的注释标签" value="{{ val('label') }}" >
 
                     </div>
                     {% if has_error('label') %} <div class="alert alert-warning" role="alert">{{ error('label') }}</div>{% endif %}

@@ -10,11 +10,13 @@ use App\Controller\admin\DetailController;
 use App\Controller\admin\JobController;
 use App\Controller\admin\MessageController;
 use App\Controller\admin\NewsController;
+use App\Controller\admin\OutputController;
 use App\Controller\admin\ProductController;
 use App\Controller\admin\SizeController;
 use App\Controller\admin\SkillController;
 use App\Controller\admin\TypesController;
 use App\Controller\admin\UserController;
+use App\Controller\admin\VoiceController;
 
 $app->group('/admin', function() {
     $this->get('', BoardController::class.':home')->setName('admin.board');//获取节点列表
@@ -76,13 +78,15 @@ $app->group('/admin', function() {
         $this->put('', AuthController::class.':infoEdit')->setName('admin.userEdit');//修改个人信息
         $this->put('/avatar', AuthController::class.':avatarEdit')->setName('admin.userAvatarEdit');//修改个人头像
     });
-    $this->group('/categories', function() {
+    $this->group('/category', function() {
         $this->get('', CategoryController::class.':index')->setName('admin.categoryTable');//大分类管理列表
         $this->get('/new', CategoryController::class.':create')->setName('admin.categoryCreatePage');//新建
         $this->post('', CategoryController::class.':store')->setName('admin.categoryCreate');//新增
         $this->delete('/{id}', CategoryController::class.':delete')->setName('admin.categoryDelete');//删除
         $this->group('/{id}/product', function() {
-            $this->get('', ProductController::class.':index')->setName('admin.ProductTable');//技术类型管理列表
+            $this->get('', ProductController::class.':index')->setName('admin.productTable');//产品中心
+            $this->get('/new', ProductController::class.':create')->setName('admin.productCreate');//新增产品
+            $this->post('', ProductController::class.':store')->setName('admin.productStore');//添加
         });
     });
     $this->group('/skill', function() {
@@ -109,7 +113,19 @@ $app->group('/admin', function() {
         $this->post('', SizeController::class.':store')->setName('admin.sizeCreate');//新增
         $this->delete('/{id}', SizeController::class.':delete')->setName('admin.sizeDelete');//删除
     });
-})->add(new AuthMiddleware($app->getContainer()));
+    $this->group('/voice', function() {
+        $this->get('', VoiceController::class.':index')->setName('admin.voiceTable');//音孔管理列表
+        $this->get('/new', VoiceController::class.':create')->setName('admin.voiceCreatePage');//新建
+        $this->post('', VoiceController::class.':store')->setName('admin.voiceCreate');//新增
+        $this->delete('/{id}', VoiceController::class.':delete')->setName('admin.voiceDelete');//删除
+    });
+    $this->group('/output', function() {
+        $this->get('', OutputController::class.':index')->setName('admin.outputTable');//输出方式管理列表
+        $this->get('/new', OutputController::class.':create')->setName('admin.outputCreatePage');//新建
+        $this->post('', OutputController::class.':store')->setName('admin.outputCreate');//新增
+        $this->delete('/{id}', OutputController::class.':delete')->setName('admin.outputDelete');//删除
+    });
+})->add(new AuthMiddleware($app->getContainer()))->add( new \App\Common\Middleware\CarefullyDeleteMiddleware($container));
 
 $app->group('/authentication', function() {
     $this->post('/auth', AuthController::class.':auth')->setName('admin.login');//登录请求

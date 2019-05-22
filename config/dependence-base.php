@@ -13,7 +13,7 @@ $container['view'] = function ($container) {
     $router = $container->get('router');
     $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
     $view->addExtension(new \Slim\Views\TwigExtension($router, $uri));
-    $view->addExtension(new  App\Common\TwigExtension\AdminExtension($container['auth']));
+    $view->addExtension(new  App\Common\TwigExtension\AdminExtension($container['auth'],$container['validator']));
     $view->addExtension(new Knlv\Slim\Views\TwigMessages(
         new Slim\Flash\Messages()
     ));
@@ -135,3 +135,9 @@ $container['phpErrorHandler'] = function($c) {
   return new phpError($c->get('logger'), $c['settings']['displayErrorDetails']);
 };
 
+//修改默认 重置404 页面的逻辑
+$container['notFoundHandler'] = function ($c) {
+    return function ($request, $response) use ($c) {
+        return $c->view->render($response,  'Admin/layout/404.html');
+    };
+};

@@ -197,6 +197,11 @@ final class BannerController
         }
 
         $banner = Banner::find($bannerId);
+
+        if(is_null($banner)){
+            throw new \Slim\Exception\NotFoundException($request, $response);
+        }
+
         $banner->title = $title;
         $banner->url = $url;
         $delFile = $banner->src;
@@ -226,15 +231,16 @@ final class BannerController
     }
 
     /**
-     * @param Request  $request
+     * @param Request $request
      * @param Response $response
-     * @param array    $arg
+     * @param array $arg
      *
      * @return Response
      */
     public function delete(Request $request, Response $response, array $arg)
     {
         $banner = Banner::find($arg['id']);
+
         $imageSrc = $banner->img;
 
         $url = $this->router->pathFor('admin.newsTable');

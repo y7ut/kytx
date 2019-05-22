@@ -128,6 +128,11 @@ final class AuthController
         if ($this->validator->isValid()) {
             if (md5($request->getParam('oldPassword')) == $this->auth->user()->password) {
                 $user = AdminUser::find($this->auth->user()->id);
+
+                if(is_null($user)){
+                    throw new \Slim\Exception\NotFoundException($request, $response);
+                }
+
                 $user->password = $request->getParam('password');
                 $user->save();
                 $this->auth->logout();
@@ -165,6 +170,11 @@ final class AuthController
             $delFile = $this->auth->user()->avatar;
             $this->auth->user()->avatar = $fileName;
             $user = AdminUser::find($this->auth->user()->id);
+
+            if(is_null($user)){
+                throw new \Slim\Exception\NotFoundException($request, $response);
+            }
+
             $user->avatar = $fileName;
             if ($user->save()) {
                 $this->delImage($delFile);

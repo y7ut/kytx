@@ -1,9 +1,9 @@
 {% extends "Admin/layout/base.html" %}
 
-{% block title %}产品类别——开元通信后台{% endblock %}
+{% block title %}输出方式——开元通信后台{% endblock %}
 
 {% block map %}
-    <li class="breadcrumb-item active" aria-current="page">产品类别</li>
+    <li class="breadcrumb-item active" aria-current="page">输出方式</li>
 {% endblock %}
 
 {% block content %}
@@ -14,9 +14,9 @@
                 <div class="e-panel card">
                     <div class="card-header">
                         <div class="float-right">
-                            <a href="{{ path_for('admin.categoryCreatePage') }}" class="btn btn-lg btn-primary m-b-5 m-t-5"><i class="fa fa-edit"></i></a>
+                            <a href="{{ path_for('admin.outputCreatePage') }}" class="btn btn-lg btn-primary m-b-5 m-t-5"><i class="fa fa-edit"></i></a>
                         </div>
-                        <h4>产品类别{% if show %} - {{ show.label }} 包含的子类别{% endif %}</h4>
+                        <h4>输出方式</h4>
                     </div>
                     <div class="card-body">
 
@@ -26,18 +26,14 @@
                                     <thead>
                                     <tr>
                                         <th class="text-center"></th>
-                                        <th class=>类别名称</th>
+                                        <th class=>输出方式</th>
                                         <th class=>注释标签</th>
-                                        {% if show %}
-                                        <th class=>父类别</th>
-                                        {% else %}
-                                        <th class="text-center">子分类</th><th class="text-center">子分类数量</th>
-                                        {% endif %}
+                                        <th class=>输出方式所属产品类别</th>
                                         <th class="text-center">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for key, item in categories %}
+                                    {% for key, item in outputs %}
                                         <tr>
 
                                             <td class="align-middle text-center">
@@ -45,16 +41,10 @@
                                             </td>
                                             <td class="text-nowrap align-middle">{{ item.name }}</td>
                                             <td class="text-nowrap align-middle">{{ item.label }}</td>
+                                            <td class="text-nowrap align-middle"><a href="{{ path_for('admin.categoryTable') }}?father={{ item.category.fatherCategory.id }}">{{ item.category.fatherCategory.name }}</a> -> {{ item.category.name }}</td>
 
-
-                                            {% if show %}
-                                                <td class="text-nowrap align-middle">{{ item.fatherCategory.name }}</td>
-                                            {% else %}
-                                                <td class="text-center align-middle">  <a href="?father={{ item.id }}" class="btn btn-primary btn-sm  mt-2 ">查看子类别</a></td>
-                                                <td class="text-center align-middle">{{ item.allChildrenCategories.count }}</td>
-                                            {% endif %}
                                             <td class="text-center align-middle">
-                                                <form action="{{ path_for('admin.categoryDelete', {'id' : item.id}) }}" method="post">      <input type="hidden" name="_METHOD" value="DELETE"/>
+                                                <form action="{{ path_for('admin.outputDelete', {'id' : item.id}) }}" method="post">      <input type="hidden" name="_METHOD" value="DELETE"/>
                                                     <button type="submit" class="btn btn-danger btn-sm  mt-2 ">删除</button>
                                                 </form>
                                             </td>
@@ -64,11 +54,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            {% if show %}
-                                <div class="float-right">
-                                    <a href="{{ path_for('admin.categoryTable') }}" class="btn btn-sm btn-primary m-b-5 m-t-5">返回</a>
-                                </div>
-                            {% endif %}
                         </div>
                     </div>
                 </div>

@@ -111,10 +111,21 @@ final class JobController
         return $response->withStatus(302)->withHeader('Location', $url);
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $arg
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Slim\Exception\NotFoundException
+     */
     public function update(Request $request, Response $response, array $arg)
     {
         $id = $arg['id'];
         $job = Job::find($id);
+
+        if(is_null($job)){
+            throw new \Slim\Exception\NotFoundException($request, $response);
+        }
 
         return $this->compact($request, $response, 'Admin/job/edit.html', [
             'job' => $job,
@@ -197,11 +208,12 @@ final class JobController
     /**
      * 修改文章的热度状态
      *
-     * @param Request  $request
+     * @param Request $request
      * @param Response $response
-     * @param array    $arg
+     * @param array $arg
      *
      * @return Response
+     * @throws \Slim\Exception\NotFoundException
      */
     public function status(Request $request, Response $response, array $arg)
     {
@@ -209,6 +221,10 @@ final class JobController
         $url = $this->router->pathFor('admin.jobTable');
 
         $user = Job::find($id);
+
+        if(is_null($user)){
+            throw new \Slim\Exception\NotFoundException($request, $response);
+        }
 
         if (0 === $user->status) {
             $Count = Job::where('status', 1)->count();

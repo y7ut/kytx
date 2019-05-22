@@ -46,10 +46,22 @@ class MessageController
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $arg
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Slim\Exception\NotFoundException
+     */
     public function show(Request $request, Response $response, array $arg)
     {
         $id = $arg['id'];
         $message = Message::find($id);
+
+        if(is_null($message)){
+            throw new \Slim\Exception\NotFoundException($request, $response);
+        }
+
 
         if (0 === $message->status) {
             $message->status = 1;
@@ -62,10 +74,21 @@ class MessageController
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $arg
+     * @return Response
+     * @throws \Slim\Exception\NotFoundException
+     */
     public function status(Request $request, Response $response, array $arg)
     {
         $id = $arg['id'];
         $message = Message::find($id);
+
+        if(is_null($message)){
+            throw new \Slim\Exception\NotFoundException($request, $response);
+        }
 
         if (0 === $message->status) {
             $message->status = 1;
