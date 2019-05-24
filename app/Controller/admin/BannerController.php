@@ -198,7 +198,7 @@ final class BannerController
 
         $banner = Banner::find($bannerId);
 
-        if(is_null($banner)){
+        if (null === $banner) {
             throw new \Slim\Exception\NotFoundException($request, $response);
         }
 
@@ -231,9 +231,9 @@ final class BannerController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $arg
+     * @param array    $arg
      *
      * @return Response
      */

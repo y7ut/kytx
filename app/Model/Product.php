@@ -8,6 +8,8 @@
 
 namespace App\Model;
 
+use App\Model\Scope\CategoryScope;
+use App\Model\Scope\ChannelScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -20,14 +22,24 @@ class Product extends Model
         return $this->belongsTo(Skill::class);
     }
 
-    public function types()
+    public function output()
     {
-        return $this->belongsTo(Types::class);
+        return $this->belongsTo(Output::class);
+    }
+
+    public function voice()
+    {
+        return $this->belongsTo(Voice::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Types::class, 'type_id');
     }
 
     public function channel()
     {
-        return $this->belongsTo(Channel::class);
+        return $this->belongsTo(Channel::class)->withoutGlobalScope(ChannelScope::class);
     }
 
     public function size()
@@ -37,6 +49,6 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->withoutGlobalScope(CategoryScope::class);
     }
 }

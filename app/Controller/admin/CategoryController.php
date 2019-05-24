@@ -45,12 +45,11 @@ final class CategoryController
         if ($father) {
             $father = Category::find($father);
 
-            if(is_null($father)){
+            if (null === $father) {
                 throw new \Slim\Exception\NotFoundException($request, $response);
             }
 
             $fatherCategories = $father->allChildrenCategories()->get();
-
         } else {
             $fatherCategories = Category::all();
             $father = false;
@@ -123,18 +122,19 @@ final class CategoryController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
      * @param $arg
      *
-     * @return Response
      * @throws \Slim\Exception\NotFoundException
+     *
+     * @return Response
      */
     public function delete(Request $request, Response $response, $arg)
     {
         $category = Category::withoutGlobalScope(CategoryScope::class)->find($arg['id']);
 
-        if(is_null($category)){
+        if (null === $category) {
             throw new \Slim\Exception\NotFoundException($request, $response);
         }
 

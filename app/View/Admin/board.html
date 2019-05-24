@@ -7,8 +7,52 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Index {{ user }}</h1>
-    <p class="important">
-        Welcome on my awesome homepage.
-    </p>
+
+    <div class="row">
+        {% for item in category %}
+            <div class="col-lg-6 col-xl-6 col-md-12 col-12">
+                <a href="{{ path_for('admin.productTable', {'id' : item.id}) }}">
+                <div class="card overflow-hide">
+                        <div class="card-body bg-transaprent cover-image "
+                             data-image-src="{{ item.products.first.image }}">
+                            <div class="dash2 text-center">
+                                <div class="mb-0 ">
+                                <input type="text" class="knob" data-thickness="0.2" data-angleArc="250" data-angleOffset="-125" value="{{ item.products.count }}" data-width="120" data-height="120" data-bgColor="rgba(255, 255, 255, 0.1)" data-fgColor="#f47b25">
+                                </div>
+                                <div class="text-white">
+                                    <small class="float-left "> {{ item.label }}</small>
+                                    <h3 class="float-right mb-0">{{ item.fatherCategory.name }}</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-xl-8  col-md-12 col-12 col-sm-12">
+            <div class="card">
+                <div id="calendar-1"></div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-xl-4  col-md-12 col-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>关于我们</h4>
+                </div>
+                <div class="card-body">
+                    {{ intro }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ parent() }}
+    <script src="{{ base_url() }}/assets/js/apexcharts.js"></script>
+    <script src="{{ base_url() }}/assets/js/dashboard2.js"></script>
 {% endblock %}

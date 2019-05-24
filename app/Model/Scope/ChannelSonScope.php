@@ -24,6 +24,6 @@ class ChannelSonScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        return $builder->where('father_id', '=',null);
+        return $builder->where('father_id', '=', null);
     }
 }

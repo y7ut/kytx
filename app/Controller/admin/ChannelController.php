@@ -47,7 +47,7 @@ final class ChannelController
         if ($father) {
             $show = Channel::find($father);
 
-            if(is_null($show)){
+            if (null === $show) {
                 throw new \Slim\Exception\NotFoundException($request, $response);
             }
 
@@ -122,11 +122,7 @@ final class ChannelController
             $channel->father_id = $father;
             $channel->category_id = Channel::find($father)->category_id;
             $url = $this->router->pathFor('admin.channelTable').'?father='.$father;
-
         }
-
-
-
 
         if ($channel->save()) {
             $this->flash->addMessage('success', '添加成功');

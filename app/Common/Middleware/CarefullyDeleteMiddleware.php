@@ -38,8 +38,9 @@ class CarefullyDeleteMiddleware
     {
         if ($request->isDelete() && ENV_DEVELOPMENT) {
             $url = $request->getUri()->getPath();
-            $url = substr($url,0,-(strlen($url)-strrpos($url, '/')));
+            $url = substr($url, 0, -(strlen($url) - strrpos($url, '/')));
             $this->flash->addMessage('success', '哎哎哎别删!');
+
             return $response->withStatus(302)->withHeader('Location', $url);
         }
 

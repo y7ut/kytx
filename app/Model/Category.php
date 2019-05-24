@@ -10,7 +10,6 @@ namespace App\Model;
 
 use App\Model\Scope\CategoryScope;
 use App\Model\Scope\ChannelScope;
-use App\Model\Scope\ChannelSonScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -73,6 +72,11 @@ class Category extends Model
         return $this->hasMany(Channel::class)->withoutGlobalScope(ChannelScope::class);
     }
 
+    public function channelFathers()
+    {
+        return $this->hasMany(Channel::class);
+    }
+
     public function sizes()
     {
         return $this->hasMany(Size::class);
@@ -86,5 +90,15 @@ class Category extends Model
     public function configs()
     {
         return $this->hasMany(Config::class);
+    }
+
+    public function voices()
+    {
+        return $this->hasMany(Voice::class);
+    }
+
+    public function outputs()
+    {
+        return $this->hasMany(Output::class);
     }
 }

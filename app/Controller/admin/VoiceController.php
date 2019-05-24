@@ -11,7 +11,6 @@ namespace App\Controller\admin;
 use App\Controller\ViewTrait;
 use App\Model\Category;
 use App\Model\Scope\CategoryScope;
-use App\Model\Types;
 use App\Model\Voice;
 use Slim\Http\Request;
 use Slim\Http\Response;

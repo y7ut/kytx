@@ -9,6 +9,8 @@
 namespace App\Controller\Admin;
 
 use App\Controller\ViewTrait;
+use App\Model\Category;
+use App\Model\Scope\CategoryScope;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -39,6 +41,11 @@ final class BoardController
     public function home(Request $request, Response $response)
     {
         //向模板返回内容
-        return $this->compact($request, $response, 'Admin/board.html');
+        $category = Category::withoutGlobalScope(CategoryScope::class)->where('father_id', '!=', null)->get();
+
+        return $this->compact($request, $response, 'Admin/board.html', [
+            'category' => $category,
+            'intro' => $this->db->table('details')->get()->first()['company_intro'],
+        ]);
     }
 }

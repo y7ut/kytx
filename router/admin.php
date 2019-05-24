@@ -87,6 +87,10 @@ $app->group('/admin', function() {
             $this->get('', ProductController::class.':index')->setName('admin.productTable');//产品中心
             $this->get('/new', ProductController::class.':create')->setName('admin.productCreate');//新增产品
             $this->post('', ProductController::class.':store')->setName('admin.productStore');//添加
+            $this->get('/edit/{pid}', ProductController::class.':update')->setName('admin.productUpdate');//产品更新页面
+            $this->put('', ProductController::class.':edit')->setName('admin.productEdit');//产品更新
+            $this->get('/status/{pid}', ProductController::class.':status')->setName('admin.productStatus');//修改用户状态
+            $this->delete('/{pid}', ProductController::class.':delete')->setName('admin.productDelete');;//删除时间轴
         });
     });
     $this->group('/skill', function() {

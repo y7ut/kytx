@@ -115,18 +115,20 @@ final class NewsController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $arg
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param array    $arg
+     *
      * @throws \Slim\Exception\NotFoundException
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function update(Request $request, Response $response, array $arg)
     {
         $id = $arg['id'];
         $news = News::find($id);
 
-        if(is_null($news)){
+        if (null === $news) {
             throw new \Slim\Exception\NotFoundException($request, $response);
         }
 
@@ -209,12 +211,13 @@ final class NewsController
     /**
      * 修改文章的热度状态
      *
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $arg
+     * @param array    $arg
+     *
+     * @throws \Slim\Exception\NotFoundException
      *
      * @return Response
-     * @throws \Slim\Exception\NotFoundException
      */
     public function status(Request $request, Response $response, array $arg)
     {
@@ -223,8 +226,7 @@ final class NewsController
 
         $user = News::find($id);
 
-
-        if(is_null($user)){
+        if (null === $user) {
             throw new \Slim\Exception\NotFoundException($request, $response);
         }
 

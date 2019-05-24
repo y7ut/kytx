@@ -29,7 +29,8 @@
                                         <th >产品名称</th>
                                         <th >缩略介绍</th>
                                         <th class="text-center">缩略图</th>
-                                        <th class=>类型</th>
+                                        <th class=>其他信息</th>
+                                        <th class=>上次修改日期</th>
                                         <th class="text-center">状态</th>
                                         <th class="text-center">操作</th>
                                     </tr>
@@ -44,19 +45,20 @@
                                             <td class="text-nowrap align-middle">{{ item.name }}</td>
                                             <td class="text-nowrap align-middle"><span>{{ item.intro }}</span></td>
                                             <td width="20%" class="align-middle text-center"><img  alt="image" class="card-img-top" src="{{ base_url() }}/{{ item.image }}"></td>
-                                            <td class="text-nowrap align-middle"><span>{{ item.type.label }}</span></td>
+                                            <td class="text-nowrap align-middle"><span>{{ table_config(item) | raw }}</span></td>
+                                            <td class="text-nowrap align-middle">{{ item.updated_at }}</span></td>
                                             <td class="text-center align-middle">
                                                 <label class="custom-switch">
-                                                    {#<a href="{{ path_for('admin.productStatus',{ 'id':item.id}) }}"> <input type="checkbox" id="status-button" name="custom-switch-checkbox" {% if item.status > 0 %}checked="checked"{% endif %} class="custom-switch-input">#}
-                                                        {#<span class="custom-switch-indicator"></span></a>#}
+                                                    <a href="{{ path_for('admin.productStatus',{'id': category.id, 'pid':item.id}) }}"> <input type="checkbox" id="status-button" name="custom-switch-checkbox" {% if item.status > 0 %}checked="checked"{% endif %} class="custom-switch-input">
+                                                        <span class="custom-switch-indicator"></span></a>
                                                 </label>
                                             </td>
                                             <td class="text-center align-middle">
-                                                {#<form action="{{ path_for('admin.productDelete', {'id' : item.id}) }}" method="post">      <input type="hidden" name="_METHOD" value="DELETE"/>#}
-                                                    {#<div class="btn-group align-top">#}
-                                                        {#<button onclick="edit({{ item.id }})"  class="btn btn-sm btn-primary badge" data-target="#user-form-modal" data-toggle="modal" type="button">Edit</button> <button class="btn btn-sm btn-primary badge" type="submit"><i class="fa fa-trash"></i></button>#}
-                                                    {#</div>#}
-                                                {#</form>#}
+                                                <form action="{{ path_for('admin.productDelete',{'id': category.id, 'pid':item.id}) }}" method="post">      <input type="hidden" name="_METHOD" value="DELETE"/>
+                                                    <div class="btn-group align-top">
+                                                        <button onclick="edit({{ item.id }})"  class="btn btn-sm btn-primary badge" data-target="#user-form-modal" data-toggle="modal" type="button">Edit</button> <button class="btn btn-sm btn-primary badge" type="submit"><i class="fa fa-trash"></i></button>
+                                                    </div>
+                                                </form>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -69,4 +71,9 @@
             </div>
         </div>
     </div>
+    <script>
+        function edit(id) {
+            window.open("{{ base_url() }}/admin/category/{{ category.id }}/product/edit/"+id)
+        }
+    </script>
 {% endblock %}

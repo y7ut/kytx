@@ -112,18 +112,20 @@ final class JobController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $arg
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param array    $arg
+     *
      * @throws \Slim\Exception\NotFoundException
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function update(Request $request, Response $response, array $arg)
     {
         $id = $arg['id'];
         $job = Job::find($id);
 
-        if(is_null($job)){
+        if (null === $job) {
             throw new \Slim\Exception\NotFoundException($request, $response);
         }
 
@@ -208,12 +210,13 @@ final class JobController
     /**
      * 修改文章的热度状态
      *
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $arg
+     * @param array    $arg
+     *
+     * @throws \Slim\Exception\NotFoundException
      *
      * @return Response
-     * @throws \Slim\Exception\NotFoundException
      */
     public function status(Request $request, Response $response, array $arg)
     {
@@ -222,7 +225,7 @@ final class JobController
 
         $user = Job::find($id);
 
-        if(is_null($user)){
+        if (null === $user) {
             throw new \Slim\Exception\NotFoundException($request, $response);
         }
 

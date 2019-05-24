@@ -129,7 +129,7 @@ final class AuthController
             if (md5($request->getParam('oldPassword')) == $this->auth->user()->password) {
                 $user = AdminUser::find($this->auth->user()->id);
 
-                if(is_null($user)){
+                if (null === $user) {
                     throw new \Slim\Exception\NotFoundException($request, $response);
                 }
 
@@ -171,7 +171,7 @@ final class AuthController
             $this->auth->user()->avatar = $fileName;
             $user = AdminUser::find($this->auth->user()->id);
 
-            if(is_null($user)){
+            if (null === $user) {
                 throw new \Slim\Exception\NotFoundException($request, $response);
             }
 
